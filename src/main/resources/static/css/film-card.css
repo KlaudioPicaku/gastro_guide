@@ -1,0 +1,149 @@
+.film-card {
+    width: 200px;
+    height: 300px;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    position: relative;
+}
+
+.film-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.film-card:hover img {
+    transform: scale(1.1);
+}
+
+.hover-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.film-card:hover .hover-content {
+    opacity: 1;
+}
+
+.modern-link {
+    text-decoration: none;
+    text-decoration-color: white;
+    color: #fff;
+    text-align: center;
+}
+.container-scroll {
+  overflow: hidden;
+  position: relative;
+}
+
+.scroll-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Disable standard scroll bar */
+  -ms-overflow-style: none;
+}
+.scroll-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+
+.row-scroll {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-right: -10px;
+  margin-left: -10px;
+}
+
+.scroll-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  background-color: #ccc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.scroll-button.previous {
+  left: 10px;
+}
+
+.scroll-button.next {
+  right: 10px;
+}
+.film-title {
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    animation: slide-in 10s infinite linear;
+}
+
+.director {
+    font-size: 14px;
+    color: #fff;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.star {
+    font-size: 20px;
+    color: #ffd700;
+    margin-right: 5px;
+}
+
+.rating-value {
+    font-size: 16px;
+    color: #fff;
+}
+        .movie-list-section {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px;
+        }
+
+        .movie-list-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            padding: 5px 10px;
+            background-color: #ccc;
+            border-radius: 5px;
+        }
+
+@keyframes slide-in {
+    0% {
+        transform: translateX(100%);
+    }
+    95% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(-1000%);
+    }
+}

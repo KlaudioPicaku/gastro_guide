@@ -1,0 +1,65 @@
+#film-carousel {
+  height: 400px;
+  position: relative;
+}
+
+
+.carousel-item {
+  position: relative;
+  height: 100%;
+  overflow: hidden; /* Hide any overflow to prevent stretching */
+}
+
+.carousel-item-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 100%;
+  max-height: 100%;
+  width: auto; /* Allow the image to shrink if necessary */
+  height: auto; /* Same function */
+  object-fit: contain; /* Scale down the image while maintaining aspect ratio */
+  z-index: 1; /* Bring the foreground image to the front */
+}
+
+
+.carousel-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-position: center;
+  filter: blur(10px);
+  z-index: 0; /* Push the background image behind the content */
+}
+.transparent-list {
+    opacity: 0.7;
+  }
+
+  .cast-item {
+    display: flex;
+    align-items: center;
+  }
+
+  .cast-name {
+    font-weight: bold;
+  }
+
+.star-rating {
+  color: gray;
+  cursor: pointer;
+}
+
+.star-rating .star {
+  display: inline-block;
+  color:gray
+}
+
+.star-rating .star.yellow {
+  color: yellow;
+}

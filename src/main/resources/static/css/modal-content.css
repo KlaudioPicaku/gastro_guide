@@ -1,0 +1,8 @@
+        #modal-content {
+            width: width: 80%;
+            height: 70%;
+        }
+
+        #review-container{
+          overflow-y: scroll;
+        }

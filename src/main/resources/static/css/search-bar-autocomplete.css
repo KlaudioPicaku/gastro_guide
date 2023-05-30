@@ -1,0 +1,48 @@
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  width: 20%; /* Adjust the width as needed */
+  z-index: 3; /* Increase the z-index value to make it appear above other elements */
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.dropdown-content.open {
+  display: block;
+}
+
+.search-result {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
+
+.search-result img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.search-result-text {
+  flex: 1;
+}
+
+.search-result-text h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.search-result-text p {
+  margin: 0;
+  font-size: 14px;
+  color: #888;
+}
+
+.search-result-divider {
+  border-top: 1px solid #eee;
+  margin-top: 10px;
+  padding-top: 10px;
+}
