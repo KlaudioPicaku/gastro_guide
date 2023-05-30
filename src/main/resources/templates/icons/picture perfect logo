@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="16" height="16" fill="currentColor" class="bi bi-film" viewBox="0 0 44.242 16.877" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <style bx:fonts="Georama">@import url(https://fonts.googleapis.com/css2?family=Georama%3Aital%2Cwght%400%2C100%3B0%2C200%3B0%2C300%3B0%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B0%2C900%3B1%2C100%3B1%2C200%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C600%3B1%2C700%3B1%2C800%3B1%2C900&amp;display=swap);</style>
+  </defs>
+  <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 0.7px;" x="15.975" y="-0.025"> </text>
+  <path d="M 0.382 1.645 C 0.382 1.093 0.83 0.645 1.382 0.645 L 15.382 0.645 C 15.935 0.645 16.382 1.093 16.382 1.645 L 16.382 15.645 C 16.382 16.197 15.935 16.645 15.382 16.645 L 1.382 16.645 C 0.83 16.645 0.382 16.197 0.382 15.645 L 0.382 1.645 Z M 4.382 1.645 L 4.382 7.645 L 12.382 7.645 L 12.382 1.645 L 4.382 1.645 Z M 12.382 9.645 L 4.382 9.645 L 4.382 15.645 L 12.382 15.645 L 12.382 9.645 Z M 1.382 1.645 L 1.382 3.645 L 3.382 3.645 L 3.382 1.645 L 1.382 1.645 Z M 3.382 4.645 L 1.382 4.645 L 1.382 6.645 L 3.382 6.645 L 3.382 4.645 Z M 1.382 7.645 L 1.382 9.645 L 3.382 9.645 L 3.382 7.645 L 1.382 7.645 Z M 3.382 10.645 L 1.382 10.645 L 1.382 12.645 L 3.382 12.645 L 3.382 10.645 Z M 1.382 13.645 L 1.382 15.645 L 3.382 15.645 L 3.382 13.645 L 1.382 13.645 Z M 15.382 1.645 L 13.382 1.645 L 13.382 3.645 L 15.382 3.645 L 15.382 1.645 Z M 13.382 4.645 L 13.382 6.645 L 15.382 6.645 L 15.382 4.645 L 13.382 4.645 Z M 15.382 7.645 L 13.382 7.645 L 13.382 9.645 L 15.382 9.645 L 15.382 7.645 Z M 13.382 10.645 L 13.382 12.645 L 15.382 12.645 L 15.382 10.645 L 13.382 10.645 Z M 15.382 13.645 L 13.382 13.645 L 13.382 15.645 L 15.382 15.645 L 15.382 13.645 Z"/>
+  <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 10.1px;" x="5.591" y="12.015">5</text>
+  <text style="fill: rgb(51, 51, 51); font-family: Georama; font-size: 4px; white-space: pre;" x="17.541" y="9.753">Picture Perfect</text>
+</svg>

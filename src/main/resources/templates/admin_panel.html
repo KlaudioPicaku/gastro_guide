@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="/fragments/base :: html" th:with="contentTemplate='admin_panel'" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<body>
+<div class="container mt-3" th:fragment="content">
+
+    <div class="slideRight mt-4 mb-4">
+         <h2 style="color:white">Admin Panel</h2>
+    </div>
+    <table class="slideLeft table" style="color:white">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Model</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td><a class="modern-link" href="/films/list_view?page=1">Films</a></td>
+            <td><a href="/admin/films/create" class="btn btn-success">
+                <i class="material-icons">&#xe145;</i>
+                Add</a></td>
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+            <td><a class="modern-link" href="/review/list_view?page=1&film=&rating=&order=">Reviews</a></td>
+            <td><a href="/reviews/create" class="btn btn-success">
+                <i class="material-icons">&#xe145;</i>
+                Add</a></td>
+        </tr>
+        <tr>
+            <th scope="row">3</th>
+            <td><a class="modern-link" href="/actors/list_view?page=1">Actors</a></td>
+            <td><a href="/admin/actors/create" class="btn btn-success">
+                <i class="material-icons">&#xe145;</i>
+                Add</a></td>
+        </tr>
+        <tr>
+            <th scope="row">4</th>
+            <td><a class="modern-link" href="/directors/list_view"> Directors</a></td>
+            <td><a href="/admin/directors/create" class="btn btn-success">
+                <i class="material-icons">&#xe145;</i>
+                Add</a></td>
+        </tr>
+<!--        <tr>-->
+<!--            <th scope="row">5</th>-->
+<!--            <td><a class="modern-link" href="/admin/users/list_view">Users</a></td>-->
+<!--            <td><a href="/users/create" class="btn btn-success">-->
+<!--                <i class="material-icons">&#xe145;</i>-->
+<!--                Add</a></td>-->
+<!--        </tr>-->
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

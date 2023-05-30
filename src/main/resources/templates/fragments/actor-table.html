@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="contentTemplate='actor-table'">
+
+<body>
+<div th:fragment="actor-table(actors,maxNumberOfPages)">
+<table class="table slideDown" style="color:white">
+  <thead>
+  <tr>
+    <div th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}">
+      <th scope="col">id</th>
+    </div>
+    <th scope="col">Image</th>
+    <th scope="col">Full Name</th>
+    <th scope="col">Born on:</th>
+    <th scope="col">Died On</th>
+    <th scope="col">Films they starred in:</th>
+  </tr>
+  <div class="d-flex justify-content-end">
+    <a href="/admin/actors/create" class="fadeIn btn btn-success">Add an Actor
+      <i class="material-icons">&#xe145;</i>
+    </a>
+  </div>
+  </thead>
+  <tbody>
+  <tr th:if="${#lists.isEmpty(actors)}">
+    <td colspan="6" class="text-center">
+      <div class="alert alert-info" role="alert">
+        <i class="bi bi-info-circle"></i> No Actors to Display
+      </div>
+    </td>
+  </tr>
+  <tr class="slideDown" th:each="actor: ${actors}">
+    <div th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}">
+      <td th:text="${actor.getId()}"></td>
+    </div>
+    <td><img th:src="@{${actor.ImagePath}}" class="rounded-left mr-2" width="45" height="70" alt="Director Image" /></td>
+    <td th:text="${actor.getFullName()}"></td>
+    <td th:text="${actor.getBirthDate()}"></td>
+    <td th:text="${actor.getDeathDate()}"></td>
+    <td><a class="modern-link" th:href="'/actor/detail?id='+ ${actor.getId()}">View Filmography...</a></td>
+  </tr>
+  </tbody>
+
+</table>
+  <form action="/actors/list_view?page=" method="GET">
+    <div th:replace="fragments/pagination :: pagination(${maxNumberOfPages})"></div>
+  </form>
+</div>
+</body>
+</html>

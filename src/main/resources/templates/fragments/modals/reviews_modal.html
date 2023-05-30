@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  th:with="contentTemplate='reviews_modal'">
+<body>
+<div id="modal-overlay" style="z-index: 1000;" >
+    <div id="modal">
+        <div id="modal-header">
+            <h2>Reviews</h2>
+            <button id="close-modal">Close</button>
+        </div>
+        <div id="modal-content" class="modal-content">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="ratingFilter">Filter by Rating:</label>
+                    <select id="ratingFilter" class="form-control">
+                        <option value="">All Ratings</option>
+                        <option value="5">5 Stars</option>
+                        <option value="4">4 Stars</option>
+                        <option value="3">3 Stars</option>
+                        <option value="2">2 Stars</option>
+                        <option value="1">1 Star</option>
+                    </select>
+                </div>
+
+                <div id="reviewsContainer">
+                    <!-- Reviews will be dynamically loaded here -->
+
+                </div>
+
+                <nav aria-label="Review Pagination">
+                    <button id="load_more_reviews" class="btn btn-secondary mt-2" >Load more...</button>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

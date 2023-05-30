@@ -1,0 +1,9 @@
+<html xmlns:th="http://www.thymeleaf.org" th:include="/fragments/base :: html" th:with="contentTemplate='search'" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<body>
+<div class="container mt-3 slideDown" th:fragment="content">
+  <meta name="_csrf" th:content="${_csrf.token}">
+  <meta name="_csrf_header" th:content="${_csrf.headerName}">
+  <div th:replace="fragments/search-table :: search-table(searchResults=${searchResults}, term=${term},maxNumberOfPages=${maxNumberOfPages},page=${page})"></div>
+</div>
+</body>
+</html>

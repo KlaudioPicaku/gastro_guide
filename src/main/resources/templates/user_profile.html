@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="/fragments/base :: html" th:with="contentTemplate='user_profile'" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<body>
+<div class="container mt-3" th:fragment="content">
+<div class="profile">
+  <meta name="_csrf" th:content="${_csrf.token}">
+  <meta name="_csrf_header" th:content="${_csrf.headerName}">
+  <div class="profile-picture">
+    <img th:if="${user.image}" th:src="${user.getImage()}" width="75" height="75" alt="Profile Picture" />
+    <button id="edit_profile_pic" type="button" class="btn btn-secondary">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+        <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"></path>
+      </svg>
+    </button>
+    <div id="profile_pic_form" style="display: none;">
+      <label for="image" style="color:white">Profile Picture:</label>
+      <input type="file" id="image" name="uploadedImages" class="form-control-file" accept="image/*" />
+      <div id="selected-images"></div>
+      <button id="save_profile_picture" class="btn btn-primary">Save</button>
+    </div>
+  </div>
+  <div class="profile-details">
+    <h2 style="color:white" th:text="${user.getUsername()}"></h2>
+    <p>
+      <span style="color:white" th:text="${user.getFirstName()}"></span>
+      <span style="color:white" th:text="${user.getLastName()}"></span>
+    </p>
+  </div>
+  <div class="bg-dark rounded p-3">
+    <h2 style="color:white">Reviews you left:</h2>
+    <div th:replace="fragments/review-table :: review-table(reviews=${reviews}, films=${films}, currentFilm=${currentFilm}, maxNumberOfPages=${maxNumberOfPages}, page=${page}, currentRating=${currentRating}, currentOrdering=${currentOrdering})"></div>
+  </div>
+</div>
+</div>
+</body>
+</html>

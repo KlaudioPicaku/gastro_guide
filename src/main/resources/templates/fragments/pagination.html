@@ -1,0 +1,22 @@
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="contentTemplate='pagination'">
+
+    <body>
+    <div th:fragment="pagination(maxNumberOfPages)" class="d-flex justify-content-center">
+        <ul class="pagination">
+            <!-- Previous page button -->
+            <button type="submit" th:if="${page > 1}" th:name="page" th:value="${page - 1}" class="page-item page-link">Previous</button>
+            <!-- Page numbers -->
+            <span th:if="${maxNumberOfPages > 0}">
+                <span th:each="pageNumber : ${#numbers.sequence(1, maxNumberOfPages)}">
+                    <button type="submit" th:name="page" th:value="${pageNumber}" th:class="${pageNumber == page ? 'active' : ''}" class="btn btn-secondary page-item page-link" th:text="${pageNumber}"></button>
+                </span>
+            </span>
+            <!-- Next page button -->
+            <button type="submit" th:if="${page < maxNumberOfPages}" th:name="page" th:value="${page + 1}" class="page-item page-link">Next</button>
+        </ul>
+    </div>
+    </body>
+</html>

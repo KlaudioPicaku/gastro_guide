@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="/fragments/base :: html"  th:with="contentTemplate='activation_failed'">
+<div class="container mt-3" th:fragment="content">
+    <body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="text-center">Activation Failed!</h2>
+                    </div>
+                    <div class="card-body text-center">
+                        <i class="fas fa-times-circle fa-3x animate__animated animate__shakeX text-danger" style="margin-right: 10px;"></i>
+                        <p>Invalid or expired link!</p>
+                        <p>
+                            <a href="/register" class="btn btn-warning">Register</a>
+                            <a href="/support" class="btn btn-secondary">Contact support</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+</div>
+</html>

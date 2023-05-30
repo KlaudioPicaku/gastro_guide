@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  th:with="contentTemplate='terms_modal'">
+
+<div id="modal-overlay" th:fragment="modal">
+    <div id="modal">
+        <div id="modal-header">
+            <h2>Terms of Use</h2>
+            <button id="close-modal">Close</button>
+        </div>
+        <div id="modal-content">
+            <p>Here are the terms of use for Gastro Guide:</p>
+            <ol>
+                <li>You are solely responsible for any content you upload or share on this website.</li>
+                <li>You agree not to use this website for any illegal or unauthorized purposes.</li>
+                <li>We reserve the right to terminate or suspend your account at any time without notice.</li>
+                <li>We reserve the right to modify these terms and conditions at any time without notice.</li>
+                <li>This website is provided "as is" and we make no warranties or representations regarding its availability, reliability, or accuracy.</li>
+                <li>You agree to indemnify and hold harmless this website and its owners from any claims, damages, or liabilities arising out of your use of this website.</li>
+            </ol>
+        </div>
+    </div>
+</div>
+</html>

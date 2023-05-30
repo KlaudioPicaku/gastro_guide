@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<div id="successMessage" class="alert alert-success d-none" role="alert" style="display: flex; align-items: center;">
+  <i class="fas fa-check-circle fa-3x animate__animated animate__zoomIn text-success" style="margin-right: 10px;"></i>
+  <p class="success-text" style="margin: 0;">Review submitted successfully!</p>
+  <button type="button" id="close_success" class="close" aria-label="Close" style="margin-left: auto;">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div id="errorMessage" class="alert alert-danger d-none" role="alert" style="display: flex; align-items: center;">
+  <i class="fas fa-times-circle fa-3x animate__animated animate__shakeX text-danger" style="margin-right: 10px;"></i>
+  <p class="error-text" style="margin: 0;">Error submitting the review.</p>
+  <button type="button" id="close_error" class="close" aria-label="Close" style="margin-left: auto;">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div id="reviewForm">
+  <div class="form-group">
+    <label style="color:white" for="rating">Rating:</label>
+    <input type="hidden" id="rating" name="rating" th:value="${review.rating}">
+    <div class="star-rating">
+      <span class="star" data-rating="1">&#9733;</span>
+      <span class="star" data-rating="2">&#9733;</span>
+      <span class="star" data-rating="3">&#9733;</span>
+      <span class="star" data-rating="4">&#9733;</span>
+      <span class="star" data-rating="5">&#9733;</span>
+    </div>
+  </div>
+<!--  <input type="hidden" name="userId" th:value="${loggedInUserId}">-->
+  <input type="hidden" name="reviewFormFilmId" value="">
+  <div class="form-group">
+    <label style="color:white" for="title">Title:</label>
+    <input type="text" class="form-control" id="title" name="title" maxlength="30" th:text="${review.title}" required>
+  </div>
+  <div class="form-group">
+    <label style="color:white" for="body">Review:</label>
+    <textarea class="form-control" id="body" name="body" rows="4" maxlength="1764" th:text="${review.body}" required></textarea>
+  </div>
+  <button type="submit" id="submit_review" class="btn btn-primary">Submit</button>
+  <button type="cancel" id="cancel_review_button" class="btn btn-secondary ml-2">Cancel</button>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="/fragments/base :: html"  th:with="contentTemplate='activation_success'">
+<div class="container mt-3" th:fragment="content">
+    <body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="text-center">Account Activated!</h2>
+                    </div>
+                    <div class="card-body text-center">
+                        <i class="fas fa-check-circle fa-3x animate__animated animate__zoomIn text-success" style="margin-right: 10px;"></i>
+                        <p>Your account has been successfully activated. Thank you for signing up with us!</p>
+                        <p>
+                            <a href="/login" class="btn btn-success">Continue to Login</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+</div>
+</html>

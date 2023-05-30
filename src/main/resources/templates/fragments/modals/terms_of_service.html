@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  th:with="contentTemplate='terms_modal'">
+
+<div id="modal-overlay" th:fragment="modal">
+  <div id="modal">
+    <div id="modal-header">
+      <h2>Terms of Service</h2>
+      <button id="close-modal">Close</button>
+    </div>
+    <div id="modal-content">
+      <p>Here are the terms of service:</p>
+      <ol>
+        <li>You must be at least 18 years of age to use this website.</li>
+        <li>You may not use this website for any illegal purposes.</li>
+        <li>We reserve the right to modify these terms of service at any time.</li>
+      </ol>
+    </div>
+  </div>
+</div>
+</html>>

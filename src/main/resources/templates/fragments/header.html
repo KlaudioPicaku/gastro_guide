@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container container-fluid">
+            <a class="navbar-brand" href="/">
+                <img th:src="@{/static/images/logo.svg}" alt="Logo" width="20" height="20"/> Gastro Guide
+                <div th:if="${#authentication != null and #authentication.getAuthorities().contains('ROLE_ADMIN')}">
+                    <div th:if="${#authentication.getAuthorities().contains('ROLE_ADMIN')}">
+                        <h6><span class="badge badge-secondary ml-3 mt-2"  style="color: black">Logged in as Admin</span></h6>
+                    </div>
+                </div>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <div class="search-bar">
+                            <form id="searchForm" method="get" action="/search">
+                            <input type="text" id="searchInput" placeholder="Search..." name="term">
+                                <input type="hidden" id="pageId" name="page" value="1">
+                            <button id="searchButton" class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+                            </form>
+                        </div>
+                        <div id="searchResults" class="dropdown-content"></div>
+
+                    </li>
+
+                </ul>
+                <div th:if="${#authentication == null}">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/}" th:classappend="${contentTemplate == 'home'} ? active : ''">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/register}" th:classappend="${contentTemplate == 'register'} ? active : ''">Sign Up</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/login}" th:classappend="${contentTemplate == 'login'} ? active : ''">Log In</a>
+                        </li>
+                    </ul>
+                </div>
+                <div th:if="${#authentication != null}">
+                    <ul class="navbar-nav">
+                        <div th:replace="fragments/profile_dropdown.html :: profile_dropdown"></div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+</html>

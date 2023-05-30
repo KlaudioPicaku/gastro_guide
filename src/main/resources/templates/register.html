@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="/fragments/base :: html"  th:with="contentTemplate='register'">
+
+<div class="container mt-3" th:fragment="content">
+  <section class="bg-light-blue vh-100" >
+    <div class="slideLeft container h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-lg-12 col-xl-11">
+          <div class="card text-black" style="border-radius: 25px;">
+            <div class="card-body p-md-5">
+              <div class="row justify-content-center">
+                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+
+                  <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+
+                  <form class="registration-form mx-1 mx-md-4" th:action="@{/register}" method="post">
+                    <div id="fields">
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <input type="text" id="first_name" class="form-control" th:field="*{user.firstName}" required />
+                        <label class="form-label" for="first_name">First Name</label><span
+                              th:if="${#fields.hasErrors('user.firstName')}" th:errors="*{user.firstName}"
+                              class="text-danger"></span>
+                      </div>
+                    </div>
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <input type="text" id="last_name" class="form-control" th:field="*{user.lastName}" required />
+                        <label class="form-label" for="last_name">Last Name</label>
+                        <span
+                                th:if="${#fields.hasErrors('user.lastName')}" th:errors="*{user.lastName}"
+                                class="text-danger"></span>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <input type="email" id="email" class="form-control" th:field="*{user.email}" required />
+                        <label class="form-label" for="email">Your Email</label>
+                        <span
+                                th:if="${#fields.hasErrors('user.email')}" th:errors="*{user.email}"
+                                class="text-danger"></span>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <input type="text" id="username" class="form-control" th:field="*{user.username}" required />
+                        <label class="form-label" for="username">Your Username</label>
+                        <span
+                                th:if="${#fields.hasErrors('user.username')}" th:field="*{user.username}"
+                                class="text-danger"></span>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <input type="password" id="password" class="form-control" th:field="*{user.password}" required  />
+                        <label class="form-label" for="password">Password</label>
+                        <ul class="text-danger" th:each="error: ${#fields.errors('user.password')}">
+                          <li th:each="message : ${error.split(',')}">
+                            <p class="error-message" th:text="${message}"></p>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <input type="password" id="confirm_password" class="form-control" th:field="*{user.confirmPassword}" required />
+                        <label class="form-label" for="confirm_password">Repeat your password</label>
+                      </div>
+                    </div>
+
+                    <div class="form-check d-flex justify-content-center mb-5">
+                      <label class="form-check-label" for="agree_to_terms_of_service">
+                        <input class="form-check-input me-2" type="checkbox" value="" id="agree_to_terms_of_service" />
+                        I agree all statements in <a id="show_modal" >Terms of service</a>
+                      </label>
+                    </div>
+
+                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                      <button type="submit" class="register-user btn btn-primary btn-lg">Register</button>
+                    </div>
+                      <div class="row">
+                        <p>Already have an account ?<a style="color:black" href="/login"> Login!</a></p>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+
+                <div class=" fadeIn col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+                  <div th:replace="/fragments/modals/terms_of_service.html :: modal"></div>
+                  <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
+                       class="img-fluid" alt="Sample image">
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</html>
