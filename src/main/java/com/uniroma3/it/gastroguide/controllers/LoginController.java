@@ -3,6 +3,7 @@ package com.uniroma3.it.gastroguide.controllers;
 import com.uniroma3.it.gastroguide.dtos.UserDto;
 import com.uniroma3.it.gastroguide.models.User;
 import com.uniroma3.it.gastroguide.services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +28,15 @@ public class LoginController {
 
 
     @GetMapping("/login")
-    public String showLoginForm(Model model) {
+    public String showLoginForm(Model model,HttpServletRequest request) {
         System.out.println("get eseguita");
         model.addAttribute("user", new UserDto());
+        model.addAttribute("request",request);
         return "login";
     }
 
     @PostMapping("/login")
-    public String loginMethod(@Valid @ModelAttribute("user") UserDto userDto, BindingResult bindingResult, HttpSession session, Model model) {
+    public String loginMethod(@Valid @ModelAttribute("user") UserDto userDto, BindingResult bindingResult, HttpSession session, Model model, HttpServletRequest request) {
         System.out.println("post eseguita");
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult.getAllErrors());
@@ -57,6 +59,7 @@ public class LoginController {
         }
 
         session.setAttribute("user", user);
+        model.addAttribute("request",request);
 
         return "redirect:/home";
     }

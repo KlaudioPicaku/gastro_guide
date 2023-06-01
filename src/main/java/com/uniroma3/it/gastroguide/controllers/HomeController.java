@@ -8,6 +8,7 @@ import com.uniroma3.it.gastroguide.services.RecipeService;
 import com.uniroma3.it.gastroguide.services.ReviewService;
 import com.uniroma3.it.gastroguide.services.StepService;
 import com.uniroma3.it.gastroguide.services.TagService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,7 +40,7 @@ public class HomeController {
     }
 
     @GetMapping(value = "/")
-    public String home(Model model) {
+    public String home(HttpServletRequest request, Model model) {
         List<Recipe> recipes = recipeService.findAll();
         Collections.sort(recipes, Comparator.comparingDouble(recipe -> -recipeService.getAverageDoubleRating(recipe)));
         List<Recipe> top5recipes = recipes.stream().limit(5).collect(Collectors.toList());
@@ -51,6 +52,7 @@ public class HomeController {
         createRecipePublic(latest3, carouselRecipes);
         model.addAttribute("recipes",publicRecipes);
         model.addAttribute("carouselRecipes",carouselRecipes);
+        model.addAttribute("request",request);
         return "home";
     }
 

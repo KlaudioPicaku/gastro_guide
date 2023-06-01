@@ -17,7 +17,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         HttpSession session = request.getSession();
         System.out.println("on athentication success ");
         session.setAttribute("user", authentication.getName());
-        System.out.println(authentication.getPrincipal());
+//        System.out.println(authentication.getPrincipal());
         super.onAuthenticationSuccess(request, response,filterChain, authentication);
     }
 }

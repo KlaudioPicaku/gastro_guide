@@ -5,22 +5,22 @@
     <div class="dropdown">
         <button class="btn btn-outline-success rounded-pill dropdown-toggle" type="button" id="profile_dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <img id="profile_picture" class="fadeIn rounded-left mr-2" width="28" height="28" />
-            <span class="profile-name ml-2" th:text="${#httpServletRequest.userPrincipal?.name}"></span>
+            <span class="profile-name ml-2" th:text="${request.userPrincipal?.name}"></span>
         </button>
         <div class="dropdown-menu text-align-right" id="profile_dropdown_menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="/profile?page=1&film=&rating=&order=">
                 <i class="bi bi-person-fill text-secondary me-2">Profile</i>
             </a>
-            <div th:if="${#authentication.getAuthorities().contains('ROLE_ADMIN')}">
-                <div th:if="${#authentication.getAuthorities().contains('ROLE_ADMIN')}">
+            <div th:if="${request != null and request.isUserInRole('ROLE_ADMIN')}">
                     <a class="dropdown-item" href="/admin/panel">
                         <i class="bi bi-speedometer text-secondary me-2">Admin Panel</i>
                     </a>
                 </div>
-            </div>
             <a class="dropdown-item" href="/logout">
                 <i class="bi bi-box-arrow-right text-secondary me-2">Logout</i>
             </a>
+            </div>
+
         </div>
     </div>
 </div>

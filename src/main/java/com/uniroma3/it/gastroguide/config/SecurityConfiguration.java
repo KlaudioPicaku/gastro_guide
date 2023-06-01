@@ -63,7 +63,7 @@ public class SecurityConfiguration  {
                 .formLogin( (form)->form
                     .loginPage("/login").permitAll()
                     .loginProcessingUrl("/login")
-//                    .successHandler(new CustomAuthenticationSuccessHandler())
+                    .successHandler(new CustomAuthenticationSuccessHandler())
                     .defaultSuccessUrl("/", true)
                     .failureUrl("/login?error=true")
                     .usernameParameter("username").passwordParameter("password")
