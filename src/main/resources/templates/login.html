@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:include="/fragments/base :: html" th:with="contentTemplate='login'">
+<html xmlns:th="http://www.thymeleaf.org" th:insert="~{/fragments/base :: html}" th:with="contentTemplate='login'">
 <div class="container mt-3" th:fragment="content">
     <section class="bg-light-blue vh-100">
         <div class="slideLeft container h-100">
@@ -42,7 +42,7 @@
                                         </p>
                                         <a id="show_modal" href="#!">Terms of Use.</a>
                                     </form>
-                                    <div th:replace="/fragments/modals/terms_of_use.html :: modal"></div>
+                                    <div th:replace="~{/fragments/modals/terms_of_use.html :: modal}"></div>
                                 </div>
                             </div>
 <!--                            <div class="col-md-6 col-lg-5 d-flex align-items-center">-->

@@ -1,10 +1,9 @@
 package com.uniroma3.it.gastroguide.models;
 
+import com.uniroma3.it.gastroguide.constants.DefaultSaveLocations;
 import jakarta.persistence.*;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "recipe")
@@ -49,6 +48,9 @@ public class Recipe {
         this.description = description;
     }
 
+    public String getUserName(){
+        return this.user.getFullName();
+    }
     public String getName() {
         return name;
     }
@@ -67,5 +69,18 @@ public class Recipe {
 
     public Long getId() {
         return  this.id;
+    }
+
+    @Transient
+    public String getCoverPath() {
+        List<RecipeImage> sortedImages = new ArrayList<>(this.images);
+
+        Collections.sort(sortedImages, Comparator.comparing(RecipeImage::getId,
+                Comparator.nullsFirst(Comparator.naturalOrder())));
+        Optional<RecipeImage> filmImage = sortedImages.stream().findFirst();
+
+        if (!filmImage.isPresent() || id == null) return null;
+
+        return "/"+ DefaultSaveLocations.DEFAULT_RECIPE_IMAGE_SAVE + filmImage.get().getFilePath();
     }
 }

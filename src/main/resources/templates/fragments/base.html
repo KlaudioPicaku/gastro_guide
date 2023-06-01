@@ -38,12 +38,12 @@
 <header th:replace="~{fragments/header.html :: header}"></header>
 <div class="container mt-3" >
     <!-- Contenuto -->
-    <div th:replace="${contentTemplate} :: content"></div>
+    <div th:replace="~{${contentTemplate} :: content}"></div>
 </div>
 <div class="container h-100 mt-12" style="position: relative;">
     <p style="position: absolute; bottom: 0; left: 0;">Gastro Guide &copy; 2023</p>
 </div>
-<footer th:replace="fragments/footer.html :: footer">
+<footer th:replace="~{fragments/footer.html :: footer}">
 
 </footer>
 </body>

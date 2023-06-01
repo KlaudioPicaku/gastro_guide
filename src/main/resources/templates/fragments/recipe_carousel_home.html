@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="contentTemplate='recipe_carousel_home'">
+
+<body>
+<div id="recipe-carousel-home" class="fadeIn carousel slide carousel-fade" data-bs-ride="carousel" th:fragment="recipe-carousel-home(carouselRecipes)">
+  <div class="carousel-indicators">
+    <th:block th:each="recipe,stat : ${carouselRecipes}">
+      <button type="button" data-bs-target="#recipe-carousel-home" th:data-bs-slide-to="${stat.index}" th:attr="aria-current=${stat.index == 0 ? 'true' : 'false'},class=${stat.index == 0 ? 'active' : ' '}, aria-label='Slide ' + (${stat.index + 1})"></button>
+    </th:block>
+  </div>
+  <div class="carousel-inner">
+    <th:block th:each="recipe, stat : ${carouselRecipes}">
+      <div class="carousel-item" th:classappend="${stat.index == 0 ? 'active' : ''}">
+        <img th:src="${recipe.getCoverPath()}" class="d-block w-100 carousel-item-img" alt="Recipe Image">
+        <div class="carousel-item-overlay">
+          <a th:href="${recipe.getAbsoluteUrl()}" class="recipe-link" th:text="${recipe.getName()}"></a>
+          <span class="carousel-item-rating" th:text="${recipe.getRating().getRatingValue()}+'&#9733;'"> <p th:text="recipe.getAuthorName()"></p></span>
+        </div>
+      </div>
+    </th:block>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#recipe-carousel-home" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#recipe-carousel-home" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+</div>
+</body>
+</html>

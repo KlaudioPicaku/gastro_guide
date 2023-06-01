@@ -76,12 +76,14 @@ public class UserDto {
         this.lastName = lastName;
     }
 
+
     @Override
     public String toString() {
         return "UserDto{" +
                 "username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", confirmPassword='" + confirmPassword + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 '}';
@@ -90,4 +92,9 @@ public class UserDto {
     public String getConfirmPassword() {
         return  this.confirmPassword;
     }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
 }

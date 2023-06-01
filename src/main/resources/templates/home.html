@@ -5,7 +5,27 @@
 <body>
 <div class="container mt-3" th:fragment="content">
 
-    HOME
+    <h3 style="color:white">Latest Recipes:</h3>
+
+    <div th:replace="~{fragments/recipe_carousel_home :: recipe-carousel-home(${carouselRecipes})}"></div>
+        <div class="container mt-2">
+            <h2 style="color:white" >Most Famous Recipes:</h2>
+            <div class="container-scroll">
+                <div class="scroll-wrapper row-scroll" style="margin-left: 50px;">
+                    <div class="col-sm-3 mt-2 slideRight" th:each="recipe : ${recipes}">
+                        <div th:replace="fragments/recipe_card_fragment :: recipe-card(recipe)"></div>
+                    </div>
+
+                    <div th:if="${#lists.isEmpty(recipes)}">
+                        <div class="alert alert-info" role="alert">
+                            <i class="bi bi-info-circle"></i> No Recipes to display!
+                        </div>
+                    </div>
+                </div>
+                <div class="scroll-button previous"><i class="bi bi-arrow-left-circle-fill"></i></div>
+                <div class="scroll-button next"><i class="bi bi-arrow-right-circle-fill"></i></div>
+            </div>
+        </div>
 
 </div>
 </body>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:include="/fragments/base :: html"  th:with="contentTemplate='register'">
+<html xmlns:th="http://www.thymeleaf.org" th:insert="~{/fragments/base :: html}"  th:with="contentTemplate='register'">
 
-<div class="container mt-3" th:fragment="content">
+<div class="container mt-3" th:fragment="content" >
   <section class="bg-light-blue vh-100" >
     <div class="slideLeft container h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
@@ -14,6 +14,14 @@
                   <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
                   <form class="registration-form mx-1 mx-md-4" th:action="@{/register}" method="post">
+<!--                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
+<!--                    <div th:if="${#fields.hasErrors()}">-->
+<!--                      <div class="alert alert-danger">-->
+<!--                        <ul>-->
+<!--                          <li th:each="error : ${#fields.allErrors()}" th:text="${error}"></li>-->
+<!--                        </ul>-->
+<!--                      </div>-->
+<!--                    </div>-->
                     <div id="fields">
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fas fa-user fa-lg me-3 fa-fw"></i>
@@ -75,6 +83,11 @@
                       <div class="form-outline flex-fill mb-0">
                         <input type="password" id="confirm_password" class="form-control" th:field="*{user.confirmPassword}" required />
                         <label class="form-label" for="confirm_password">Repeat your password</label>
+                        <ul class="text-danger" th:each="error: ${#fields.errors('user.confirmPassword')}">
+                          <li th:each="message : ${error.split(',')}">
+                            <p class="error-message" th:text="${message}"></p>
+                          </li>
+                        </ul>
                       </div>
                     </div>
 
@@ -97,7 +110,7 @@
 
 
                 <div class=" fadeIn col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-                  <div th:replace="/fragments/modals/terms_of_service.html :: modal"></div>
+                  <div th:insert="~{/fragments/modals/terms_of_service.html :: modal}"></div>
                   <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
                        class="img-fluid" alt="Sample image">
 

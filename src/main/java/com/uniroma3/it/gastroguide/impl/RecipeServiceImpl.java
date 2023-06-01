@@ -17,6 +17,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalDouble;
+import java.util.stream.Collectors;
 
 @Service
 @Qualifier("recipeServiceImpl")
@@ -102,7 +103,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public Double getAveragDoubleRating(Recipe recipe) {
+    public Double getAverageDoubleRating(Recipe recipe) {
         List<Review> reviews = reviewService.findAllByRecipe(recipe);
         OptionalDouble averageRating = reviews.stream()
                 .mapToDouble(Review::getRating)
@@ -114,6 +115,12 @@ public class RecipeServiceImpl implements RecipeService {
         return null;
     }
 
+    @Override
+    public List<Recipe> getLatest3() {
+        return recipeRepository.findAll(Sort.by(Sort.Direction.DESC, "id")).stream()
+                .limit(3)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public List<Recipe> findByIngredient(Ingredient ingredient) {
@@ -125,7 +132,7 @@ public class RecipeServiceImpl implements RecipeService {
         List<Recipe> recipes = this.findAll();
         //tenendo conto che getAverageDouble può ritornare null, in quel caso la media delle review sarà 0
         recipes.sort(Comparator.comparingDouble(film -> {
-            Double averageRating = getAveragDoubleRating((Recipe) film);
+            Double averageRating = getAverageDoubleRating((Recipe) film);
             return (averageRating != null) ? averageRating : 0.0;
         }).reversed());
 

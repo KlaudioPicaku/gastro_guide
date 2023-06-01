@@ -1,5 +1,6 @@
 package com.uniroma3.it.gastroguide.impl;
 
+import com.uniroma3.it.gastroguide.models.Recipe;
 import com.uniroma3.it.gastroguide.models.Step;
 import com.uniroma3.it.gastroguide.repositories.StepRepository;
 import com.uniroma3.it.gastroguide.services.StepService;
@@ -22,5 +23,11 @@ public class StepServiceImpl implements StepService {
     @Override
     public List<Step> findAllByRecipeId(Long recipeId) {
         return stepRepository.findAllByRecipeId(recipeId);
+    }
+
+    @Override
+    public double getEstimatedDuration(Recipe r) {
+        double totalTime=findAllByRecipeId(r.getId()).stream().mapToDouble(Step::getEstimatedDuration).sum();
+        return totalTime;
     }
 }

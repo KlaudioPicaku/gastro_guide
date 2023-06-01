@@ -15,7 +15,7 @@ public class RecipeImage {
     private String filePath;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "film_id", nullable = false)
+    @JoinColumn(name = "recipe_id", nullable = false)
     private Recipe recipe;
 
     public RecipeImage(){}
@@ -51,5 +51,9 @@ public class RecipeImage {
         if (this == null || id == null) return null;
 
         return DefaultSaveLocations.DEFAULT_RECIPE_IMAGE_SAVE + this.filePath;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

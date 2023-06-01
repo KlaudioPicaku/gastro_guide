@@ -1,10 +1,7 @@
 package com.uniroma3.it.gastroguide.config;
 
 import com.uniroma3.it.gastroguide.impl.*;
-import com.uniroma3.it.gastroguide.repositories.RecipeRepository;
-import com.uniroma3.it.gastroguide.repositories.ReviewRepository;
-import com.uniroma3.it.gastroguide.repositories.StepRepository;
-import com.uniroma3.it.gastroguide.repositories.UserRepository;
+import com.uniroma3.it.gastroguide.repositories.*;
 import com.uniroma3.it.gastroguide.repositories.tokens.VerificationTokenRepository;
 import com.uniroma3.it.gastroguide.services.*;
 import com.uniroma3.it.gastroguide.services.tokens.PasswordResetTokenService;
@@ -28,11 +25,21 @@ public class AppConfig {
     public StepService stepService(StepRepository stepRepository){
         return new StepServiceImpl(stepRepository);
     }
+
+    @Bean
+    public TagService tagService(TagRepository tagRepository){
+        return  new TagServiceImpl(tagRepository);
+    }
     @Bean
     public RecipeService recipeService(RecipeRepository recipeRepository, ReviewService reviewService, StepRepository stepRepository, StepService stepService, UserRepository userRepository, ReviewRepository reviewRepository){
         return  new RecipeServiceImpl(recipeRepository, reviewService,
                 stepRepository, stepService,
                 userRepository, reviewRepository);
+    }
+
+    @Bean
+    public IngredientService ingredientService(RecipeRepository recipeRepository,IngredientRepository ingredientRepository){
+        return new IngredientServiceImpl(recipeRepository,ingredientRepository);
     }
 
 

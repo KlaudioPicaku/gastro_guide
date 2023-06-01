@@ -1,10 +1,15 @@
 package com.uniroma3.it.gastroguide.config;
 
 
+import com.uniroma3.it.gastroguide.impl.UserServiceImpl;
+import com.uniroma3.it.gastroguide.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,6 +26,11 @@ import java.io.IOException;
 @EnableWebSecurity
 public class SecurityConfiguration  {
 
+    @Autowired
+    private UserServiceImpl userService;
+
+
+
     @Bean
     public SpringSecurityDialect springSecurityDialect() {
         return new SpringSecurityDialect();
@@ -36,44 +46,39 @@ public class SecurityConfiguration  {
         return authenticationConfiguration.getAuthenticationManager();
     }
     @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
+        auth.setUserDetailsService(userService);
+        auth.setPasswordEncoder(passwordEncoder());
+        return auth;
+    }
+
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/", "/login", "/oauth/**","/registration**").permitAll()
-                .and()
-                .formLogin()
-                .loginPage("/login").permitAll()
-                .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/", true)
-                .successHandler(new CustomAuthenticationSuccessHandler())
-                .failureUrl("/login?error=true")
-                .usernameParameter("username").passwordParameter("password")
-                .and()
-                .logout()
+        http.authorizeRequests((requests)->requests
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/", "/login", "/oauth/**","/registration**").permitAll()
+                        .requestMatchers("/login").permitAll()
+                )
+                .formLogin( (form)->form
+                    .loginPage("/login").permitAll()
+                    .loginProcessingUrl("/login")
+//                    .successHandler(new CustomAuthenticationSuccessHandler())
+                    .defaultSuccessUrl("/", true)
+                    .failureUrl("/login?error=true")
+                    .usernameParameter("username").passwordParameter("password")
+                )
+
+                .logout((logout)-> logout
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout")
-                .permitAll();
-//                .and()
-//                .oauth2Login()
-//                .loginPage("/login")
-//                .defaultSuccessUrl("/oauth2/callback/code/github")
-//                .userInfoEndpoint()
-//                .userService(oauthUserService)
-//                .and()
-//                .successHandler(new AuthenticationSuccessHandler() {
-//
-//                    @Override
-//                    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-//                                                        Authentication authentication) throws IOException, ServletException
-//                    {
-//
-//                        CustomOAuth2User oauthUser = (CustomOAuth2User) authentication.getPrincipal();
-//                        userService.processOAuthPostLogin(oauthUser.getEmail());
-//                        response.sendRedirect("/list");
-//                    }
-//                });
+                        .permitAll())
+                .securityContext((securityContext) -> securityContext
+                        .requireExplicitSave(true));
+
+
         return http.build();
     }
 }

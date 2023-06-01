@@ -34,9 +34,11 @@ public class RegistrationController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute("userDto") UserDto user, BindingResult result) {
-//        System.out.println(user.toString());
+    public String registerUser(@Valid @ModelAttribute("user") UserDto user, BindingResult result) {
+        System.out.println(user.toString());
         if (result.hasErrors()) {
+            System.out.println("has errors ");
+            System.out.println(result.getAllErrors());
             return "register";
         }
         if (!user.getPassword().equals(user.getConfirmPassword())) {
@@ -67,6 +69,6 @@ public class RegistrationController {
 
 
         userService.saveUser(user);
-        return "/login";
+        return "redirect:/login";
     }
 }

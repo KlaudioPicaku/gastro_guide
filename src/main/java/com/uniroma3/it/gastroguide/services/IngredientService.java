@@ -11,5 +11,7 @@ public interface IngredientService {
 
     List<Ingredient> findAllIngredientsByRecipe(Recipe recipe);
 
+    List<Ingredient> findAllByNameContaining(String name);
+
 
 }

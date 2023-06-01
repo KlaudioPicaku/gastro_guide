@@ -1,5 +1,6 @@
 package com.uniroma3.it.gastroguide.config;
 
+import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,10 +13,11 @@ import java.io.IOException;
 public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, Authentication authentication) throws IOException, ServletException {
         HttpSession session = request.getSession();
+        System.out.println("on athentication success ");
         session.setAttribute("user", authentication.getName());
-
-        super.onAuthenticationSuccess(request, response, authentication);
+        System.out.println(authentication.getPrincipal());
+        super.onAuthenticationSuccess(request, response,filterChain, authentication);
     }
 }

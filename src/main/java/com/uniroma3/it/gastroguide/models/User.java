@@ -53,6 +53,8 @@ public class User implements UserDetails {
     @Column (name="foto",nullable = true)
     private String image;
 
+    @Column
+    private boolean verifiedChef;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -71,9 +73,18 @@ public class User implements UserDetails {
         this.image = image;
         this.enabled=false;
         this.isSuperuser=false;
+        this.verifiedChef=false;
     }
 
     // getters and setters
+
+    public boolean isVerifiedChef() {
+        return verifiedChef;
+    }
+
+    public void setVerifiedChef(boolean verifiedChef) {
+        this.verifiedChef = verifiedChef;
+    }
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
@@ -189,4 +200,7 @@ public class User implements UserDetails {
                 '}';
     }
 
+    public String getFullName() {
+        return this.firstName+" "+this.lastName;
+    }
 }

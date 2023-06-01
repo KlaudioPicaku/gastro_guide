@@ -17,6 +17,7 @@ public class VerificationTokenImpl implements VerificationTokenService {
     @Override
     public VerificationToken findByToken(String token) {
         VerificationToken verificationToken = verificationTokenRepository.findByToken(token);
+        System.out.println(verificationToken.isValid());
         if (verificationToken.isValid()){
             return verificationToken;
         }

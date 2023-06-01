@@ -9,6 +9,7 @@ import com.uniroma3.it.gastroguide.repositories.UserRepository;
 import com.uniroma3.it.gastroguide.repositories.tokens.VerificationTokenRepository;
 import com.uniroma3.it.gastroguide.services.UserService;
 import com.uniroma3.it.gastroguide.services.tokens.PasswordResetTokenService;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.GrantedAuthority;
@@ -32,7 +33,7 @@ import java.util.UUID;
 
 @Service
 @Qualifier("userServiceImpl")
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService,UserDetailsService {
 
     private UserRepository userRepository;
 
@@ -68,7 +69,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsername(username);
     }
     @Override
-    public void saveUser(@org.jetbrains.annotations.NotNull UserDto user){
+    public void saveUser(@NotNull UserDto user){
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         User newUser=new User(user.getUsername(),user.getEmail(),encodedPassword,user.getFirstName(),user.getLastName(), GUIconstants.DEFAULT_PROFILE_PICTURE);
         userRepository.save(newUser);

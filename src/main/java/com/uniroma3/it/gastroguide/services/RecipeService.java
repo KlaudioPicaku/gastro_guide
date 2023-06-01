@@ -25,5 +25,8 @@ public interface RecipeService {
 
     public List<Recipe> findByUser(User user);
     public String getAverageRating(Recipe recipe);
-    public Double getAveragDoubleRating(Recipe recipe);
+    public Double getAverageDoubleRating(Recipe recipe);
+
+
+    List<Recipe> getLatest3();
 }

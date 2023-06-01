@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" th:with="contentTemplate='review-table'">
 
 <body>
-<div th:fragment="review-table(reviews,films,currentFilm,maxNumberOfPages,page,currentRating,currentOrdering)">
+<div th:fragment="review-table(reviews,recipes,currentRecipe,maxNumberOfPages,page,currentRating,currentOrdering)">
 <!--    <p th:text="${currentRating}"></p>-->
     <form id="reviewTableFilters" method="get" action="">
         <div class="row">
@@ -10,9 +10,9 @@
                 <input type="hidden" name="page" value="1">
                 <label style="color:white" for="filmId">Film:</label>
                 <select class="select" id="filmId" name="film">
-                    <option value="">All Films</option>
-                    <option th:each="film : ${films}" th:value="${film.getId()}" th:text="${film.getTitle()}"
-                            th:selected="${currentFilm != null and film.getId() == currentFilm.getId()}"></option>
+                    <option value="">All Recipes</option>
+                    <option th:each="recipe : ${recipes}" th:value="${recipe.getId()}" th:text="${recipe.getName()}"
+                            th:selected="${currentRecipe != null and recipe.getId() == currentRecipe.getId()}"></option>
                 </select>
             </div>
             <div class="col-md-3">
@@ -44,13 +44,13 @@
     <table class="slidDown table" style="color:white">
         <thead>
         <tr>
-            <div th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}">
+            <div th:if="${#authentication.getAuthorities().contains('ROLE_ADMIN')}">
                 <th scope="col">id</th>
             </div>
             <th scope="col">Author</th>
             <th scope="col">Title</th>
             <th scope="col">Body</th>
-            <th scope="col">Film</th>
+            <th scope="col">Recipe</th>
             <th scope="col">Rating</th>
             <th scope="col">Action</th>
         </tr>
@@ -64,7 +64,7 @@
             </td>
         </tr>
         <tr class="slideDown" th:each="review: ${reviews}">
-            <div th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}">
+            <div th:if="${#authentication.getAuthorities().contains('ROLE_ADMIN')}">
                 <td th:text="${review.getReviewId()}"></td>
             </div>
             <td th:text="${review.getReviewAuthor()}"></td>
@@ -77,10 +77,10 @@
             </td>
             <td>
                 <div class="d-flex">
-                    <div th:if="${#httpServletRequest != null and (#httpServletRequest.isUserInRole('ROLE_ADMIN')) or (#httpServletRequest.userPrincipal != null and #httpServletRequest.userPrincipal.name == review.getReviewAuthor())}">
+                    <div th:if="${#authentication.getAuthorities().contains('ROLE_ADMIN') or #authentication.getPrincipal().getName() == review.getReviewAuthor()}">
                         <a id="delete_review" class="btn btn-danger" th:href="@{'/reviews/delete_confirm?id=' + ${review.getReviewId()}}"><i class="bi bi-trash"></i></a>
                     </div>
-                    <div th:if="${#httpServletRequest.userPrincipal != null and #httpServletRequest.userPrincipal.name == review.getReviewAuthor()}">
+                    <div th:if="${#authentication.getPrincipal().getName() == review.getReviewAuthor()}">
                         <a id="edit_review" class="btn btn-warning" th:href="@{'/reviews/edit?id=' + ${review.getReviewId()}}"><i class="bi bi-pencil-square"></i></a>
                     </div>
                 </div>
@@ -89,17 +89,18 @@
         </tbody>
     </table>
     <div>
-        <!-- Previous page button -->
-        <a th:if="${page > 1}" th:href="@{${'/?page=' + (page - 1)}}" class="pagination-link">Previous</a>
-        <!-- Page numbers -->
-                <span th:if="${maxNumberOfPages > 0}">
-                    <span th:each="pageNumber : ${#numbers.sequence(1, maxNumberOfPages)}">
-                        <a th:href="@{${'/?page=' + pageNumber}}" th:class="${pageNumber == page ? 'active' : ''}" class="modern-link pagination-link" th:text="${pageNumber}"></a>
-                    </span>
-                </span>
+        <div th:replace="fragments/pagination :: pagination(${maxNumberOfPages})"></div>
+<!--        &lt;!&ndash; Previous page button &ndash;&gt;-->
+<!--        <a th:if="${page > 1}" th:href="@{${'/?page=' + (page - 1)}}" class="pagination-link">Previous</a>-->
+<!--        &lt;!&ndash; Page numbers &ndash;&gt;-->
+<!--                <span th:if="${maxNumberOfPages > 0}">-->
+<!--                    <span th:each="pageNumber : ${#numbers.sequence(1, maxNumberOfPages)}">-->
+<!--                        <a th:href="@{${'/?page=' + pageNumber}}" th:class="${pageNumber == page ? 'active' : ''}" class="modern-link pagination-link" th:text="${pageNumber}"></a>-->
+<!--                    </span>-->
+<!--                </span>-->
 
-        <!-- Next page button -->
-        <a th:if="${page < maxNumberOfPages}" th:href="@{${'/?page=' + (page + 1)}}" class="modern-link pagination-link">Next</a>
+<!--        &lt;!&ndash; Next page button &ndash;&gt;-->
+<!--        <a th:if="${page < maxNumberOfPages}" th:href="@{${'/?page=' + (page + 1)}}" class="modern-link pagination-link">Next</a>-->
     </div>
 </div>
 </body>

@@ -26,6 +26,9 @@ public class Step {
     @Column(name = "updatedOn", nullable = false)
     private LocalDateTime updatedOn;
 
+    @Column(name="estimatedDuration")
+    private Double estimatedDuration;
+
     @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -33,16 +36,20 @@ public class Step {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "recipe_id", nullable = false)
     private Recipe recipe;
+
+
+
     public Step(){
 
     }
-    public Step(String title, String body, LocalDateTime createdOn, LocalDateTime updatedOn, User user, Recipe recipe) {
+    public Step(String title, String body, LocalDateTime createdOn, LocalDateTime updatedOn, User user, Recipe recipe,Double estimatedDuration) {
         this.title = title;
         this.body = body;
         this.createdOn = LocalDateTime.now();
         this.updatedOn =  LocalDateTime.now();
         this.user = user;
         this.recipe = recipe;
+        this.estimatedDuration=estimatedDuration;
     }
 
     @Override
@@ -104,5 +111,13 @@ public class Step {
 
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
+    }
+
+    public Double getEstimatedDuration() {
+        return estimatedDuration;
+    }
+
+    public void setEstimatedDuration(Double estimatedDuration) {
+        this.estimatedDuration = estimatedDuration;
     }
 }

@@ -5,11 +5,12 @@
         <div class="container container-fluid">
             <a class="navbar-brand" href="/">
                 <img th:src="@{/static/images/logo.svg}" alt="Logo" width="20" height="20"/> Gastro Guide
-                <div th:if="${#authentication != null and #authentication.getAuthorities().contains('ROLE_ADMIN')}">
-                    <div th:if="${#authentication.getAuthorities().contains('ROLE_ADMIN')}">
+                <div th:if="${#httpServletRequest != null and #httpServletRequest.isUserInRole('ROLE_ADMIN')}">
+                    <div th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}">
                         <h6><span class="badge badge-secondary ml-3 mt-2"  style="color: black">Logged in as Admin</span></h6>
                     </div>
                 </div>
+<!--                <div th:text="${#authentication.authorities}"></div>-->
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

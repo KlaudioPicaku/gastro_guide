@@ -11,8 +11,8 @@
             <a class="dropdown-item" href="/profile?page=1&film=&rating=&order=">
                 <i class="bi bi-person-fill text-secondary me-2">Profile</i>
             </a>
-            <div th:if="${#httpServletRequest != null and #httpServletRequest.isUserInRole('ROLE_ADMIN')}">
-                <div th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}">
+            <div th:if="${#authentication.getAuthorities().contains('ROLE_ADMIN')}">
+                <div th:if="${#authentication.getAuthorities().contains('ROLE_ADMIN')}">
                     <a class="dropdown-item" href="/admin/panel">
                         <i class="bi bi-speedometer text-secondary me-2">Admin Panel</i>
                     </a>

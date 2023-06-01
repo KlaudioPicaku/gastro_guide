@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="contentTemplate='recipe_card_fragment'">
+<body>
+<div th:fragment="recipe-card(recipe)">
+    <section class="mx-auto my-5" style="max-width: 23rem;">
+
+        <div class="card booking-card v-2 mt-2 mb-4 rounded-bottom">
+            <div class="bg-image hover-overlay ripple ripple-surface ripple-surface-light" data-mdb-ripple-color="light">
+                <img th:src="${recipe.getCoverPath()}" class="img-fluid">
+                <a th:href="${recipe.getAbsoluteUrl()}">
+                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                </a>
+            </div>
+            <div class="card-body">
+                <h4 class="card-title font-weight-bold"><a th:href="${recipe.getAbsoluteUrl()}" th:text="${recipe.getName()}"></a></h4>
+                <div class="rating">
+                    <span class="star">&#9733;</span>
+                    <span class="rating-value" th:text="${recipe.getRating().getRatingValue()}"></span>
+                </div>
+                <p class="card-text" th:text="${#strings.abbreviate(recipe.getDescription(), 100, '...')}"></p>
+                <hr class="my-4">
+                <ul class="list-unstyled d-flex justify-content-start align-items-center mb-0">
+                    <li>
+                        <div class="chip ms-3" ><i class="bi bi-clock-fill" th:text="${recipe.getEstimatedDuration()}"></i></div>
+                    </li>>
+                </ul>
+                <hr class="my-4">
+                <ul class="list-unstyled d-flex justify-content-start align-items-center mb-0">
+                    <li th:each="tag : ${recipe.getTags()}">
+                        <div class="chip ms-3" th:text="${tag}"></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </section>
+</div>
+</body>
+</html>

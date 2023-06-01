@@ -52,6 +52,7 @@ public class LoginController {
 
         if (!user.get().isEnabled()) {
             model.addAttribute("emailNotVerified", true);
+
             return "login";
         }
 

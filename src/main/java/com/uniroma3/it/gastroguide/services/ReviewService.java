@@ -17,7 +17,6 @@ public interface ReviewService {
     List<Review> findAllByRecipe(Recipe recipe);
 
     Review save(Review review);
-
     void saveOrUpdate(Review review);
 
     void delete(Long id);
@@ -35,4 +34,5 @@ public interface ReviewService {
     List<Review> findAllByUserAndRatingForRecipe(Recipe recipe, Integer rating, Optional<User> user);
 
     List<Review> findAllByRecipeId(Recipe recipe);
+
 }

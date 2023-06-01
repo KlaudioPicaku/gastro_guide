@@ -1,4 +1,4 @@
-#film-carousel-home {
+#recipe-carousel-home {
   height: 400px;
   position: relative;
   overflow: hidden;
@@ -80,7 +80,7 @@
           opacity: 1;
         }
 
-        .film-link {
+        .recipe-link {
           display: block;
           font-size: 16px;
           margin-bottom: 5px;
