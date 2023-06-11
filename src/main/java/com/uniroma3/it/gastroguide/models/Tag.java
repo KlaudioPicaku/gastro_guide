@@ -2,6 +2,11 @@ package com.uniroma3.it.gastroguide.models;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Entity
 @Table(name = "tag")
 public class Tag {
@@ -15,13 +20,27 @@ public class Tag {
     private String title;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "recipe_id", nullable = false)
-    private Recipe recipe;
+    private User user;
+    @ManyToMany(mappedBy = "tags")
+    private Set<Recipe> recipes = new HashSet<>();;
 
     public Tag(){}
+
+    public Tag(String title,User userId){
+        this.title=title;
+        this.user=userId;
+    }
     public Tag(String title, Recipe recipe) {
         this.title = title;
-        this.recipe = recipe;
+        this.recipes.add(recipe);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Set<Recipe> getRecipes() {
+        return recipes;
     }
 
     public String getTitle() {
@@ -32,11 +51,18 @@ public class Tag {
         this.title = title;
     }
 
-    public Recipe getRecipe() {
-        return recipe;
+    public Set<Recipe> getRecipe() {
+        return this.recipes;
     }
 
-    public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
+    public void setRecipe(Set<Recipe> recipes) {
+        this.recipes = recipes;
+    }
+    public void addRecipe(Recipe recipe){
+        this.recipes.add(recipe);
+    }
+    public void removeRecipe(Recipe recipe) {
+        recipes.remove(recipe);
+        recipe.getTags().remove(this);
     }
 }

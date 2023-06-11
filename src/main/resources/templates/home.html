@@ -13,7 +13,7 @@
             <div class="container-scroll">
                 <div class="scroll-wrapper row-scroll" style="margin-left: 50px;">
                     <div class="col-sm-3 mt-2 slideRight" th:each="recipe : ${recipes}">
-                        <div th:replace="fragments/recipe_card_fragment :: recipe-card(recipe)"></div>
+                        <div th:replace="~{fragments/recipe_card_fragment :: recipe-card(${recipe})}"></div>
                     </div>
 
                     <div th:if="${#lists.isEmpty(recipes)}">

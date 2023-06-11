@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @EntityScan("com.uniroma3.it.gastroguide.models")
 @SpringBootApplication()
-public class GastroguideApplication {
+public class  GastroguideApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(GastroguideApplication.class, args);

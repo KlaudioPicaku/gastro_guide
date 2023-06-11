@@ -29,7 +29,7 @@
       <textarea class="form-control" id="body" name="body" rows="4" maxlength="1764" th:field="*{review.reviewBody}" required></textarea>
     </div>
     <button type="submit" id="submit_non_rest_review" class="btn btn-primary">Submit</button>
-    <a th:href="@{${#httpServletRequest.getHeader('referer')}}" class="btn btn-secondary">Cancel</a>
+    <a th:href="@{${#request.getHeader('referer')}}" class="btn btn-secondary">Cancel</a>
   </form>
 </div>
 </body>

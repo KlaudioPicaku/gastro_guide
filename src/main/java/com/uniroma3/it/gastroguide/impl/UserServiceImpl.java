@@ -148,6 +148,11 @@ public class UserServiceImpl implements UserService,UserDetailsService {
     }
 
     @Override
+    public Optional<User> findByUsername(String name) {
+        return userRepository.findByUsername(name);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DisabledException {
         Optional<User> user= userRepository.findByUsername(username);
         if (!user.isPresent()){

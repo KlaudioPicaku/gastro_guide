@@ -1,39 +1,37 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:with="contentTemplate='recipe_card_fragment'">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:util="urn:java:org.thymeleaf.expression.Strings" th:with="contentTemplate='recipe_card_fragment'">
 <body>
 <div th:fragment="recipe-card(recipe)">
-    <section class="mx-auto my-5" style="max-width: 23rem;">
-
-        <div class="card booking-card v-2 mt-2 mb-4 rounded-bottom">
-            <div class="bg-image hover-overlay ripple ripple-surface ripple-surface-light" data-mdb-ripple-color="light">
-                <img th:src="${recipe.getCoverPath()}" class="img-fluid">
-                <a th:href="${recipe.getAbsoluteUrl()}">
-                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                </a>
-            </div>
-            <div class="card-body">
-                <h4 class="card-title font-weight-bold"><a th:href="${recipe.getAbsoluteUrl()}" th:text="${recipe.getName()}"></a></h4>
-                <div class="rating">
-                    <span class="star">&#9733;</span>
-                    <span class="rating-value" th:text="${recipe.getRating().getRatingValue()}"></span>
-                </div>
-                <p class="card-text" th:text="${#strings.abbreviate(recipe.getDescription(), 100, '...')}"></p>
-                <hr class="my-4">
-                <ul class="list-unstyled d-flex justify-content-start align-items-center mb-0">
-                    <li>
-                        <div class="chip ms-3" ><i class="bi bi-clock-fill" th:text="${recipe.getEstimatedDuration()}"></i></div>
-                    </li>>
-                </ul>
-                <hr class="my-4">
-                <ul class="list-unstyled d-flex justify-content-start align-items-center mb-0">
-                    <li th:each="tag : ${recipe.getTags()}">
-                        <div class="chip ms-3" th:text="${tag}"></div>
-                    </li>
-                </ul>
+    <div class="recipe-card">
+        <div class="cover-image">
+            <img th:src="${recipe.getCoverPath()}" class="card-img-top" alt="Recipe Image">
+            <div class="author-overlay mt-2">
+                <span><img th:src="${recipe.getAuthorProfilePic()}" class="author-profile-pic" alt="Author Profile Picture"></span>
+                <span class="author-name"><a class="recipe-link" th:text="${recipe.getAuthorName()}" th:href="${recipe.getAuthorAbsoluteUrl()}"></a></span>
+                <span th:if="${recipe.isVerified()}"><i class="bi bi-patch-check-fill checkmark" data-toggle="tooltip" data-placement="top" title="Verified Chef"></i></span>
             </div>
         </div>
-
-    </section>
+        <div class="card-body">
+            <div class="row">
+                <div class="card-rating">
+                    <span class="star">&#9733;</span>
+                    <span class="rating-value" th:text="${recipe.getRating().getRatingValue()}"></span>
+                    <span> <i class="bi bi-clock-fill clock-icon" th:text="${recipe.getEstimatedDuration()} + 'min'"></i></span>
+                </div>
+            </div>
+            <div class="row">
+                <h5 class="card-title">
+                    <a class="recipe-link" th:href="${recipe.getAbsoluteUrl()}" th:text="${recipe.getName()}"></a>
+                </h5>
+            </div>
+            <p class="card-text" th:text="${#strings.abbreviate(recipe.getDescription(), 100)}"></p>
+            <hr class="my-4">
+            <p>Tags:</p>
+            <div class="card-tags">
+                <span class="badge badge-primary" th:each="tag : ${recipe.getTags()}">[[${tag}]]</span>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

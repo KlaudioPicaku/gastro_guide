@@ -9,6 +9,7 @@ import com.uniroma3.it.gastroguide.services.EmailService;
 import com.uniroma3.it.gastroguide.services.UserService;
 import com.uniroma3.it.gastroguide.services.tokens.PasswordResetTokenService;
 import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,13 +34,14 @@ public class ResetPasswordController {
     private EmailService emailService;
 
     @GetMapping("/reset-password")
-    public String getResetPasswordForm(Model model){
+    public String getResetPasswordForm(HttpServletRequest request, Model model){
+        model.addAttribute("request",request);
         model.addAttribute("passModel",new PasswordResetDto());
         return "reset_password";
     }
 
     @PostMapping("/reset/password/insert-code")
-    public String getInsertCodeForm(@ModelAttribute("passModel") PasswordResetDto passwordResetDto, BindingResult result, Model modelreturn){
+    public String getInsertCodeForm(@ModelAttribute("passModel") PasswordResetDto passwordResetDto, BindingResult result, Model modelreturn,HttpServletRequest request){
         if (result.hasErrors()){
             result.rejectValue("userEmail","The email you inserted wasn't valid. Please try again !");
             return "reset_password";
@@ -63,11 +65,12 @@ public class ResetPasswordController {
         }
         modelreturn.addAttribute("userId",user.get().getId());
         modelreturn.addAttribute("resetModel",new PasswordResetDto());
+        modelreturn.addAttribute("request",request);
         return "insert-password-reset-code";
     }
 
     @PostMapping("/reset/password/")
-    public String resetConfirm(@ModelAttribute ("resetModel") PasswordResetDto resetModel,BindingResult result,Model model){
+    public String resetConfirm(@ModelAttribute ("resetModel") PasswordResetDto resetModel,BindingResult result,Model model,HttpServletRequest request){
 
         String code= resetModel.getCode();
         System.out.println("................");
@@ -75,17 +78,20 @@ public class ResetPasswordController {
         System.out.println("..........");
         if(code.isEmpty() || !passwordResetTokenService.findByToken(code).isValid()){
             result.rejectValue("code","invalid.code","The provide code was invalid or expired");
+            model.addAttribute("request",request);
             return "insert-password-reset-code";
         }
         PasswordResetConfirm passwordResetConfirm= new PasswordResetConfirm();
         passwordResetConfirm.setUserId(passwordResetTokenService.findByToken(code).getUser().getId());
         model.addAttribute("passwordResetConfirm",passwordResetConfirm);
+        model.addAttribute("request",request);
         return "insert-new-password-form";
     }
     @PostMapping("/update/password/")
-    public String resetPassword(@ModelAttribute("passwordResetConfirm") PasswordResetConfirm passwordResetConfirm,BindingResult result){
+    public String resetPassword(@ModelAttribute("passwordResetConfirm") PasswordResetConfirm passwordResetConfirm,BindingResult result,Model model,HttpServletRequest request){
         if(result.hasErrors() || !passwordResetConfirm.getPassword().equals(passwordResetConfirm.getConfirmPassword())){
             result.rejectValue("password", "invalid.password","The password you inserted didn't match or wasn't valid, try again after 14 minutes");
+            model.addAttribute("request",request);
             return "insert-new-password-form";
         }
         Optional<User> user = userService.getUserById(passwordResetConfirm.getUserId());
@@ -94,6 +100,7 @@ public class ResetPasswordController {
         System.out.println( !user.get().isEnabled());
         if((user!= null && !user.isPresent()) || !user.get().isEnabled()){
             result.rejectValue("password", "disabled.account"," Account non existent or disabled. Check the email address you inserted is correct and try again after 14 minutes");
+            model.addAttribute("request",request);
             return "insert-new-password-form";
         }
         userService.updateUser(user.get(),passwordResetConfirm.getPassword());

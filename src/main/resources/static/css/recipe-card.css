@@ -1,23 +1,26 @@
 
-
-.card.booking-card.v-2 {
-    background-color: #c7f2e3;
+.recipe-card {
+    background-color: rgb(246, 184, 184);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px); /* For Safari */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertically center the contents */
+    align-items: center; /* Horizontally center the contents */
+    text-align: center; /* Center the text */
+}
+.clock-icon {
+    font-size: 1rem; /* Adjust the font size as needed */
+    color: white;
 }
 
-.card.booking-card.v-2 .fa {
-    color: #f7aa00;
-}
-
-.card.booking-card.v-2 .card-body .card-text {
-    color: #db2d43;
-}
-
-.card.card.booking-card.v-2 .chip {
-    background-color: #87e5da;
-}
-
-.card.booking-card.v-2 .card-body hr {
-    border-top: 1px solid #f7aa00;
+.card-img-top {
+    width: 98%; /* Adjust the width as desired */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px; /* Add rounded edges */
+    object-fit: cover; /* Scale and crop the image to fit the container */
 }
 
 .hover-content {
@@ -106,13 +109,13 @@
 
 .star {
     font-size: 20px;
-    color: #ffd700;
+    color: #86a1db;
     margin-right: 5px;
 }
 
 .rating-value {
-    font-size: 16px;
-    color: #fff;
+    font-size: 1rem;
+    color: #ffffff;
 }
         .movie-list-section {
             display: flex;
@@ -128,6 +131,31 @@
             background-color: #ccc;
             border-radius: 5px;
         }
+
+.author-overlay {
+    position: relative;
+    top: 37%;
+    left: 10px;
+    display: flex;
+    align-items: center;
+    color: #fff;
+}
+
+.checkmark {
+    color: #fff;
+}
+
+.author-profile-pic {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.author-name {
+    font-size: 14px;
+    font-weight: bold;
+}
 
 @keyframes slide-in {
     0% {

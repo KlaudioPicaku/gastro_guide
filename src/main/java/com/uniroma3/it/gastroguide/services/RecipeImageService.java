@@ -15,4 +15,6 @@ public interface RecipeImageService {
     Optional<RecipeImage> findById(Long Id);
 
     List<RecipeImage> findByRecipeId(Long recipeId);
+
+    RecipeImage save(RecipeImage recipeImage);
 }

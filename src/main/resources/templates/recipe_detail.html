@@ -1,0 +1,59 @@
+<html xmlns:th="http://www.thymeleaf.org" th:include="/fragments/base :: html" th:with="contentTemplate='recipe_detail'" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<body>
+<div class="container mt-3" th:fragment="content">
+  <div class="mt-4 mb-4">
+    <h3 style="color:white;" th:text="${recipe.getName()} "></h3>
+  </div>
+  <div class="recipe-intro">
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <input type="hidden" id="recipeId" name="recipe" th:value="${recipe.getId()}">
+    <div class="col-md-3" style="text-align: left;">
+      <a class="modern-link" th:href="${recipe.getAuthorAbsoluteUrl()}" style="font-style: italic" th:text="'by: ' + ${recipe.getAuthorName()} " ></a>
+    </div>
+    <!-- Recipe Carousel -->
+    <div th:replace="fragments/recipe-carousel :: recipe-carousel(${recipe})"></div>
+    <!-- Recipe Rating and Review Section -->
+    <div class="row mt-4">
+      <div class="col-md-10">
+        <!-- Check if user is logged in -->
+        <!-- If not logged in, show login or sign up message -->
+        <div th:if="${reviewLeft}">
+          <p-dark id="review_left">Thanks for reviewing this Recipe!</p-dark>
+        </div>
+        <div th:if="${request != null and request.isUserInRole('ROLE_ADMIN') or request.isUserInRole('ROLE_USER')} and not ${reviewLeft}">
+          <p-dark id="write_a_review_statement">Have you seen this Review? <a class="modern-link" id="write_a_review">Leave your thoughts!</a></p-dark>
+        </div>
+        <div th:unless="${request != null and request.isUserInRole('ROLE_ADMIN') or request.isUserInRole('ROLE_USER')}">
+          <a class="modern-link" href="/register">Login or Sign Up to leave your thoughts!</a>
+        </div>
+        <div th:if="${request != null and request.isUserInRole('ROLE_ADMIN')}">
+          <a  id="edit_recipe" class="btn btn-warning" th:href="@{'/chef/recipe/edit?id=' + ${recipe.getId()}}">Edit</a>
+          <a  id="delete_recipe" class="btn btn-danger" th:href="@{'/chef/recipe/delete_confirm?id=' + ${recipe.getId()}}">Delete</a>
+        </div>
+        <!-- If logged in, show review form -->
+      </div>
+      <div class="col-md-2">
+        <div>
+          <!-- Recipe Rating -->
+          <div class="rating">
+            <p-dark>Rating:  </p-dark>
+            <span class="star">&#9733;</span>
+            <span id="rating_value" class="rating-value"></span>
+            <a class="modern-link" id="show_review_modal" data-toggle="modal" data-target="#reviewsModal">
+              (<span id="review_counter" th:text="${number_of_reviews}"></span>)
+            </a>
+          </div>
+          <div id="reviewModal"></div>
+        </div>
+      </div>
+<!--  <div class="steps">-->
+<!--    <div class="step" th:each="step : ${recipe.getSteps()}"-->
+<!--  </div>-->
+<!--  </div>-->
+<!--</div>-->
+    </div>
+  </div>
+</div>
+</body>
+</html>

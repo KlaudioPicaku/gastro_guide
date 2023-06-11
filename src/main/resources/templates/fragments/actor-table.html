@@ -6,7 +6,7 @@
 <table class="table slideDown" style="color:white">
   <thead>
   <tr>
-    <div th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}">
+    <div th:if="${#request.isUserInRole('ROLE_ADMIN')}">
       <th scope="col">id</th>
     </div>
     <th scope="col">Image</th>
@@ -30,7 +30,7 @@
     </td>
   </tr>
   <tr class="slideDown" th:each="actor: ${actors}">
-    <div th:if="${#httpServletRequest.isUserInRole('ROLE_ADMIN')}">
+    <div th:if="${#request.isUserInRole('ROLE_ADMIN')}">
       <td th:text="${actor.getId()}"></td>
     </div>
     <td><img th:src="@{${actor.ImagePath}}" class="rounded-left mr-2" width="45" height="70" alt="Director Image" /></td>

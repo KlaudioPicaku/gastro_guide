@@ -43,8 +43,15 @@
                     </ul>
                 </div>
                 <div th:if="${request.userPrincipal != null }">
-                    <ul class="navbar-nav">
-                        <div th:replace="fragments/profile_dropdown.html :: profile_dropdown"></div>
+                    <ul class="navbar-nav d-flex">
+                        <li class="nav-item mt-2 mr-2">
+                            <a class="btn btn-secondary" th:href="@{/recipe/create}">
+                                <i class="bi bi-pencil-square"></i> Create Recipe
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <div th:replace="~{fragments/profile_dropdown.html :: profile_dropdown}"></div>
+                        </li>
                     </ul>
                 </div>
             </div>

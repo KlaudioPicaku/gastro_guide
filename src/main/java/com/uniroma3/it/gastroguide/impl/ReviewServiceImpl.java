@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -98,6 +99,11 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public List<Review> findAllByRecipeId(Recipe recipe) {
         return reviewRepository.findAllByRecipeId(recipe.getId());
+    }
+
+    @Override
+    public Collection<Review> findAllByUserAndRecipe(User user, Optional<Recipe> recipe) {
+        return reviewRepository.findAllByUserAndRecipe(user,recipe);
     }
 
 }

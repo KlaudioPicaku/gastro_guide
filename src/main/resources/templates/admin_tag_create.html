@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:insert="~{/fragments/base :: html}" th:with="contentTemplate='admin_tag_create'">
+<div class="container mt-3" th:fragment="content">
+  <div class="mt-4 mb-4">
+    <h2 style="color:white">Create Tag </h2>
+  </div>
+  <div class="fadeIn tag-form">
+    <div class="col-md-6">
+      <form th:action="@{/admin/tag/create}" method="post" enctype="multipart/form-data">
+        <div class="row">
+          <label for="recipeTags" style="color:white">Tags:</label>
+          <select class="select" id="recipeTags" multiple name="tagDtos">
+          </select>
+        </div>
+        <hr class="divider">
+        <div class="row" style="z-index: 2">
+          <span id="tagExistsMessage" style="color:red; display: none;">Tag already exists!</span>
+          <label for="newTagInput" style="color:white">Create One:</label>
+          <input type="text" id="newTagInput" class="form-control" placeholder="Enter a new tag" />
+          <button type="button" id="addNewTagButton" class="btn btn-primary">Add Tag</button>
+        </div>
+        <div style="z-index: 2">
+          <button class="btn btn-primary mt-4" type="submit">Create Tags</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</html>

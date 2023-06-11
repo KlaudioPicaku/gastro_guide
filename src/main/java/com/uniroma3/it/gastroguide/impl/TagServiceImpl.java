@@ -1,5 +1,6 @@
 package com.uniroma3.it.gastroguide.impl;
 
+import com.uniroma3.it.gastroguide.dtos.TagDto;
 import com.uniroma3.it.gastroguide.models.Tag;
 import com.uniroma3.it.gastroguide.repositories.RecipeRepository;
 import com.uniroma3.it.gastroguide.repositories.TagRepository;
@@ -22,11 +23,34 @@ public class TagServiceImpl implements TagService {
     }
     @Override
     public List<Tag> findAllByRecipeId(Long recipeId) {
-        return tagRepository.findAllByRecipeId(recipeId);
+        return tagRepository.findByRecipeId(recipeId);
     }
 
     @Override
     public Optional<Tag> findByTitleContainingIgnoreCase(String title) {
         return tagRepository.findAllByTitleContainingIgnoreCase(title);
+    }
+
+    @Override
+    public List<Tag> findAll() {
+        return tagRepository.findAll();
+    }
+
+    @Override
+    public Optional<Tag> findByTitle(String name) {
+        return tagRepository.findByTitle(name);
+    }
+
+    @Override
+    public void saveOrUpdate(Tag tag) {
+        this.tagRepository.save(tag);
+    }
+
+    @Override
+    public void bulkCreate(List<TagDto> tagDtos) {
+        for (TagDto td: tagDtos) {
+            Tag t=new Tag(td.getName(),td.getUserId());
+            tagRepository.save(t);
+        }
     }
 }

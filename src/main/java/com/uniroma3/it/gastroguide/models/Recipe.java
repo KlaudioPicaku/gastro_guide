@@ -1,6 +1,7 @@
 package com.uniroma3.it.gastroguide.models;
 
 import com.uniroma3.it.gastroguide.constants.DefaultSaveLocations;
+import com.uniroma3.it.gastroguide.constants.StaticURLs;
 import jakarta.persistence.*;
 
 import java.util.*;
@@ -22,8 +23,13 @@ public class Recipe {
 
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.REMOVE)
     private List<Step> steps;
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.REMOVE)
-    private List<Tag> tags;
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "recipe_tag",
+            joinColumns = @JoinColumn(name = "recipe_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private Set<Tag> tags = new HashSet<>();
+
+
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
@@ -41,6 +47,8 @@ public class Recipe {
     private Set<RecipeImage> images = new HashSet<>();
 
 
+
+
     public Recipe(){}
 
     public Recipe(String name, String description) {
@@ -50,6 +58,9 @@ public class Recipe {
 
     public String getUserName(){
         return this.user.getFullName();
+    }
+    public User getUser(){
+        return this.user;
     }
     public String getName() {
         return name;
@@ -82,5 +93,53 @@ public class Recipe {
         if (!filmImage.isPresent() || id == null) return null;
 
         return "/"+ DefaultSaveLocations.DEFAULT_RECIPE_IMAGE_SAVE + filmImage.get().getFilePath();
+    }
+
+    public void setUser(User user) {
+        this.user=user;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags=tags;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients=ingredients;
+    }
+
+    public void setSteps(List<Step> steps) {
+        this.steps=steps;
+    }
+
+    public void addImage(RecipeImage image) {
+        this.images.add(image);
+    }
+
+    public void removeTag(Tag tag) {
+        tags.remove(tag);
+        tag.getRecipes().remove(this);
+    }
+
+    public Set<Tag> getTags() {
+        return this.tags;
+    }
+
+    public String getAuthorAbsoluteUrl(){
+        return StaticURLs.CHEF_DETAIL_URL+this.getUser().getFullName();
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+    public String getAuthorName(){
+        return  this.user.getFullName();
+    }
+
+    public List<Step> getSteps() {
+        return steps;
+    }
+
+    public Set<RecipeImage> getImages(){
+        return  this.images;
     }
 }

@@ -14,7 +14,7 @@
     </div>
 
     <div>
-      <p-dark>Film: <span th:text="${object.getFilm().getTitle()}"></span></p-dark>
+      <p-dark>Film: <span th:text="${object.getRecipe().getName()}"></span></p-dark>
     </div>
 
     <form action="/reviews/delete" method="POST">
@@ -23,7 +23,7 @@
       <div class="row mt-2">
         <div class="col md-2">
           <button type="submit" class="btn btn-danger">Confirm</button>
-            <a th:href="@{${#httpServletRequest.getHeader('referer')}}" class="btn btn-secondary">Cancel</a>
+            <a th:href="@{${#request.getHeader('referer')}}" class="btn btn-secondary">Cancel</a>
         </div>
 
       </div>

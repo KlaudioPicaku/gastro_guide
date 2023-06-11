@@ -3,6 +3,7 @@ package com.uniroma3.it.gastroguide.controllers;
 import com.uniroma3.it.gastroguide.dtos.UserDto;
 import com.uniroma3.it.gastroguide.models.User;
 import com.uniroma3.it.gastroguide.services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,7 +29,8 @@ public class RegistrationController {
     }
 
     @GetMapping("/register")
-    public String showRegistrationForm(Model model) {
+    public String showRegistrationForm(HttpServletRequest request, Model model) {
+        model.addAttribute("request",request);
         model.addAttribute("user", new UserDto());
         return "register";
     }

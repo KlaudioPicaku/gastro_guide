@@ -42,30 +42,46 @@ public class HomeController {
     @GetMapping(value = "/")
     public String home(HttpServletRequest request, Model model) {
         List<Recipe> recipes = recipeService.findAll();
-        Collections.sort(recipes, Comparator.comparingDouble(recipe -> -recipeService.getAverageDoubleRating(recipe)));
+
+        // Sort recipes by average rating (null values will be treated as the maximum value)
+        Comparator<Recipe> ratingComparator = Comparator.comparingDouble(recipe -> {
+            Double averageRating = recipeService.getAverageDoubleRating(recipe);
+            return averageRating != null ? -averageRating : Double.MAX_VALUE;
+        });
+        recipes.sort(Comparator.nullsLast(ratingComparator));
+
         List<Recipe> top5recipes = recipes.stream().limit(5).collect(Collectors.toList());
-        List<RecipePublic> publicRecipes=new LinkedList<>();
+        List<RecipePublic> publicRecipes = new LinkedList<>();
         createRecipePublic(top5recipes, publicRecipes);
 
-        List<Recipe> latest3=recipeService.getLatest3();
-        List<RecipePublic> carouselRecipes=new ArrayList<>();
+        List<Recipe> latest3 = recipeService.getLatest3();
+        List<RecipePublic> carouselRecipes = new ArrayList<>();
         createRecipePublic(latest3, carouselRecipes);
-        model.addAttribute("recipes",publicRecipes);
-        model.addAttribute("carouselRecipes",carouselRecipes);
-        model.addAttribute("request",request);
+//        System.out.println(publicRecipes.size());
+//        for(RecipePublic r : publicRecipes){
+//            System.out.println(r.getCoverPath());
+//        }
+        model.addAttribute("recipes", publicRecipes);
+        model.addAttribute("carouselRecipes", carouselRecipes);
+        model.addAttribute("request", request);
         return "home";
     }
+
 
     private void createRecipePublic(List<Recipe> source, List<RecipePublic> destination) {
         for (Recipe r:source) {
             String ratingValue= recipeService.getAverageRating(r);
             String reviewCount=String.valueOf(reviewService.findAllByRecipe(r).stream().count());
             double estimatedDuration=stepService.getEstimatedDuration(r);
-            List<String> tags= new ArrayList<>(tagService.findAllByRecipeId(r.getId()).stream().map(Tag::getTitle).toList());
+            List<String> tags = tagService.findAllByRecipeId(r.getId())
+                    .stream()
+                    .map(Tag::getTitle)
+                    .map(tag -> tag.replaceAll("[\\[\\]\"]", "").trim())
+                    .filter(tag -> !tag.isEmpty())
+                    .collect(Collectors.toList());
             destination.add(new RecipePublic(r.getId(),r.getCoverPath(),r.getName(),
                     r.getUserName(),r.getDescription(),ratingValue,reviewCount,
-                    estimatedDuration,stepService.findAllByRecipeId(r.getId()).size(),tags));
-
+                    estimatedDuration,stepService.findAllByRecipeId(r.getId()).size(),tags,r.getUser().getImage(),r.getUser().getAbsoluteUrl(),r.getUser().isVerified()));
         }
     }
 }

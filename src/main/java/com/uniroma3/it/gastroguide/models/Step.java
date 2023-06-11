@@ -40,6 +40,8 @@ public class Step {
 
 
     public Step(){
+        this.createdOn=LocalDateTime.now();
+        this.updatedOn=LocalDateTime.now();
 
     }
     public Step(String title, String body, LocalDateTime createdOn, LocalDateTime updatedOn, User user, Recipe recipe,Double estimatedDuration) {

@@ -27,5 +27,7 @@ public interface UserService extends UserDetailsService {
 
     Optional<User> loadByEmail(String email);
 
+    Optional<User> findByUsername(String name);
+
 //    void processOAuth2User(OAuth2AuthenticationToken authenticationToken);
 }

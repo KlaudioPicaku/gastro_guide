@@ -3,6 +3,7 @@ package com.uniroma3.it.gastroguide.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,9 +22,8 @@ public class Ingredient {
         private Double quantity;
 
         @ManyToMany(mappedBy = "ingredients")
-        private List<Recipe> recipes;
+        private List<Recipe> recipes=new ArrayList<>();
 
-        // Constructors, getters, and setters
 
         public Ingredient() {
         }
@@ -58,4 +58,8 @@ public class Ingredient {
         public void setQuantity(Double quantity) {
             this.quantity = quantity;
         }
+
+    public void addRecipe(Recipe recipe) {
+            this.recipes.add(recipe);
     }
+}

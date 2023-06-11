@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:insert="~{/fragments/base :: html}" th:with="contentTemplate='recipe_create_form'">
+<div class="container mt-3" th:fragment="content">
+    <div class="mt-4 mb-4">
+        <h2 style="color:white">Create Recipe </h2>
+    </div>
+    <div class="fadeIn row recipe-form">
+        <div class="col-md-6">
+            <form th:action="@{/recipe/create}" method="post" enctype="multipart/form-data">
+                <label for="name" style="color:white">Title:</label>
+                <input type="text" id="name" class="form-control" th:field="*{recipe.name}" required />
+                <p class="error-message" th:if="${#fields.hasErrors('recipe.name')}" th:errors="*{recipe.name}"></p>
+
+
+                <label for="recipe_description" style="color:white">Recipe Description:</label>
+                <textarea id="recipe_description" rows="4" maxlength="4000" class="form-control" th:field="*{recipe.description}" required></textarea>
+                <p class="error-message" th:if="${#fields.hasErrors('recipe.description')}" th:errors="*{recipe.description}"></p>
+
+                <hr class="divider">
+
+                <div id="ingredientFields">
+                    <div class="row ingredient-row" th:each="ingredient, ingredientIndex : ${recipe.ingredients}">
+                        <div class="col-md-6">
+                            <label th:for="'ingredientName_' + ${ingredientIndex.index}">Ingredient Name:</label>
+                            <input type="text" th:id="'ingredientName_' + ${ingredientIndex.index}" class="form-control" th:field="*{recipe.ingredients[__${ingredientIndex.index}__].name}" required>
+                            <p class="error-message" th:if="${#fields.hasErrors('recipe.ingredients[__${ingredientIndex.index}__].name')}" th:errors="*{recipe.ingredients[__${ingredientIndex.index}__].name}"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <label th:for="'ingredientQuantity_' + ${ingredientIndex.index}">Quantity:</label>
+                            <input type="text" th:id="'ingredientQuantity_' + ${ingredientIndex.index}" class="form-control" th:field="*{recipe.ingredients[__${ingredientIndex.index}__].quantity}" required>
+                            <p class="error-message" th:if="${#fields.hasErrors('recipe.ingredients[__${ingredientIndex.index}__].quantity')}" th:errors="*{recipe.ingredients[__${ingredientIndex.index}__].quantity}"></p>
+                        </div>
+                        <div class="col-md-3 delete-ingredient-button">
+
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary mt-2" type="button" id="add_ingredient_field">Add Ingredient</button>
+
+                <hr class="divider">
+
+                <div id="stepFields">
+                    <div class="step-row" th:each="step, stepIndex : ${recipe.steps}">
+                        <div class="row ">
+                            <div class="col-md-6">
+                                <label th:for="'stepName_' + ${stepIndex.index}">Step Name:</label>
+                                <input type="text" th:id="'stepName_' + ${stepIndex.index}" class="form-control" th:field="*{recipe.steps[__${stepIndex.index}__].title}" required>
+                                <p class="error-message" th:if="${#fields.hasErrors('recipe.steps[__${stepIndex.index}__].title')}" th:errors="*{recipe.steps[__${stepIndex.index}__].title}"></p>
+                            </div>
+                            <div class="col-md-3">
+                                <label th:for="'stepEstimatedTime_' + ${stepIndex.index}">Estimated Time:</label>
+                                <input type="text" th:id="'stepEstimatedTime_' + ${stepIndex.index}" class="form-control" th:field="*{recipe.steps[__${stepIndex.index}__].estimatedDuration}" required>
+                                <p class="error-message" th:if="${#fields.hasErrors('recipe.steps[__${stepIndex.index}__].estimatedDuration')}" th:errors="*{recipe.steps[__${stepIndex.index}__].estimatedDuration}"></p>
+                            </div>
+                            <div class="col-md-3 delete-step-button">
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label for="stepDescription">Step Description:</label>
+                            <textarea id="stepDescription" th:id="'stepDescription_' + ${stepIndex.index}" th:name="'recipe.steps[' + ${stepIndex.index} + '].body'" th:field="*{recipe.steps[__${stepIndex.index}__].body}" required></textarea>
+                            <p class="error-message" th:if="${#fields.hasErrors('recipe.steps[__${stepIndex.index}__].body')}" th:errors="*{recipe.steps[__${stepIndex.index}__].body}"></p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <button class="btn btn-primary mt-2" type="button" id="add_step_field">Add Step</button>
+
+                <hr class="divider">
+
+                <input type="file" id="image" class="form-control-file" th:field="*{recipe.images}" accept="image/*" multiple />
+                <div id="selected-images"></div>
+                <hr class="divider">
+                <div class="row">
+                    <label for="recipeTags" style="color:white">Tags:</label>
+                    <select class="select" id="recipeTags" multiple>
+                        <option value=" "></option>
+                        <option th:each="tag : ${tags}" th:value="${tag.id}" th:text="${tag.title}"></option>
+                    </select>
+
+                </div>
+                <hr class="divider">
+                <div class="row" style="z-index: 2">
+                    <span id="tagExistsMessage" style="color:red; display: none;">Tag already exists!</span>
+                    <label for="newTagInput" style="color:white">You can't find the desired tag? Create One:</label>
+                    <input type="text" id="newTagInput" class="form-control" placeholder="Enter a new tag" />
+                    <button type="button" id="addNewTagButton" class="btn btn-primary">Add Tag</button>
+                </div>
+                <input type="hidden" th:field="*{recipe.tagDtos}" id="tagDtos" />
+                <div style="z-index: 2">
+                    <button class="btn btn-primary mt-4" type="submit" >Create Recipe</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</html>

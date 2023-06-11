@@ -4,6 +4,7 @@ import com.uniroma3.it.gastroguide.models.Recipe;
 import com.uniroma3.it.gastroguide.models.Review;
 import com.uniroma3.it.gastroguide.models.User;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,4 +36,5 @@ public interface ReviewService {
 
     List<Review> findAllByRecipeId(Recipe recipe);
 
+    Collection<Review> findAllByUserAndRecipe(User user, Optional<Recipe> film);
 }

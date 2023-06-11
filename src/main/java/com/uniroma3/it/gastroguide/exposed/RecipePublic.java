@@ -1,9 +1,9 @@
 package com.uniroma3.it.gastroguide.exposed;
 
 import com.uniroma3.it.gastroguide.constants.StaticURLs;
+import com.uniroma3.it.gastroguide.models.RecipeImage;
 
 import java.util.List;
-import java.util.Map;
 
 public class RecipePublic {
     private Long id;
@@ -13,8 +13,12 @@ public class RecipePublic {
 
     private String authorName;
 
+    private String authorProfilePic;
+
 
     private String description;
+
+    private String authorAbosluteUrl;
 
 
     private RatingPublic rating;
@@ -24,8 +28,15 @@ public class RecipePublic {
     private int numberOfSteps;
 
     private List<String> tags;
+    private boolean isVerified;
 
-    public RecipePublic(Long id,String coverPath, String name, String authorName, String description, String ratingValue,String reviewCount, double estimatedDuration, int numberOfSteps,List<String> tags) {
+    private List<StepPublic> stepPublic;
+
+    private List<RecipeImage> images;
+
+    public RecipePublic(Long id, String coverPath, String name, String authorName, String description,
+                        String ratingValue, String reviewCount, double estimatedDuration,
+                        int numberOfSteps, List<String> tags, String authorProfilePic, String authorAbosluteUrl, boolean verified,List<StepPublic> stepPublic,List<RecipeImage> images) {
         this.id=id;
         this.coverPath = coverPath;
         this.name = name;
@@ -35,6 +46,36 @@ public class RecipePublic {
         this.estimatedDuration = estimatedDuration;
         this.numberOfSteps = numberOfSteps;
         this.tags=tags;
+        this.authorProfilePic=authorProfilePic;
+        this.authorAbosluteUrl=authorAbosluteUrl;
+        this.isVerified=verified;
+        this.stepPublic=stepPublic;
+        this.images=images;
+    }
+
+    public RecipePublic(Long id, String coverPath, String name, String authorName, String description,
+                        String ratingValue, String reviewCount, double estimatedDuration,
+                        int numberOfSteps, List<String> tags, String authorProfilePic, String authorAbosluteUrl, boolean verified) {
+        this.id=id;
+        this.coverPath = coverPath;
+        this.name = name;
+        this.authorName = authorName;
+        this.description = description;
+        this.rating = new RatingPublic(id,ratingValue,reviewCount);
+        this.estimatedDuration = estimatedDuration;
+        this.numberOfSteps = numberOfSteps;
+        this.tags=tags;
+        this.authorProfilePic=authorProfilePic;
+        this.authorAbosluteUrl=authorAbosluteUrl;
+        this.isVerified=verified;
+    }
+
+    public String getAuthorProfilePic() {
+        return authorProfilePic;
+    }
+
+    public void setAuthorProfilePic(String authorProfilePic) {
+        this.authorProfilePic = authorProfilePic;
     }
 
     public Long getId() {
@@ -110,4 +151,10 @@ public class RecipePublic {
         this.numberOfSteps = numberOfSteps;
     }
 
+    public String getAuthorAbsoluteUrl(){
+        return this.authorAbosluteUrl;
+    }
+    public boolean isVerified(){
+        return this.isVerified;
+    }
 }

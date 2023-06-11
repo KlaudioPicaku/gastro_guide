@@ -30,4 +30,9 @@ public class StepServiceImpl implements StepService {
         double totalTime=findAllByRecipeId(r.getId()).stream().mapToDouble(Step::getEstimatedDuration).sum();
         return totalTime;
     }
+
+    @Override
+    public void saveOrUpdate(Step step) {
+        this.stepRepository.save(step);
+    }
 }

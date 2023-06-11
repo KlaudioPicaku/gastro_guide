@@ -8,13 +8,13 @@
   height: 100%;
 }
 
-.carousel-item-home {
-            position: relative;
-            height: 100vh;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
+.carousel-item {
+    position: relative;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 
         .carousel-item-img {
            position: absolute;
@@ -38,21 +38,22 @@
             filter: blur(8px);
         }
 
-        .carousel-item-overlay {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          padding: 20px;
-          background-color: rgba(0, 0, 0, 0.6);
-          color: white;
-          z-index: 2;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: flex-end;
-        }
-
+    .carousel-item-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 20px;
+        background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 80%);
+        color: white;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        border-radius: 50%;
+        overflow: hidden;
+    }
         .carousel-item-citation {
           font-size: 18px;
           margin-bottom: 10px;

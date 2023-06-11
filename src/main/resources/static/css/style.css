@@ -107,7 +107,6 @@ body {
   display: flex;
   flex-direction: column;
 }
-
 main {
   flex-grow: 1;
 }
@@ -117,6 +116,7 @@ footer {
   bottom: 0;
   width: 100%;
   height: 50px;
+    z-index: -400;
 }
 .table {
     color: white;
@@ -5044,15 +5044,15 @@ a.badge:hover, a.badge:focus {
 
 .badge-primary {
   color: #ffffff;
-  background-color: #dd5500;
+  background-color: #8ca0e0;
 }
 a.badge-primary:hover, a.badge-primary:focus {
   color: #ffffff;
-  background-color: #aa4100;
+  background-color: #0144a9;
 }
 a.badge-primary:focus, a.badge-primary.focus {
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(221, 85, 0, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(0, 37, 221, 0.5);
 }
 
 .badge-secondary {

@@ -31,10 +31,11 @@ public class AppConfig {
         return  new TagServiceImpl(tagRepository);
     }
     @Bean
-    public RecipeService recipeService(RecipeRepository recipeRepository, ReviewService reviewService, StepRepository stepRepository, StepService stepService, UserRepository userRepository, ReviewRepository reviewRepository){
-        return  new RecipeServiceImpl(recipeRepository, reviewService,
-                stepRepository, stepService,
-                userRepository, reviewRepository);
+    public RecipeService recipeService( ReviewService reviewService, StepService stepService, UserService userService,
+                                        RecipeRepository recipeRepository, IngredientService ingredientService,TagService tagService,
+                                        RecipeImageService recipeImageService){
+        return  new RecipeServiceImpl( reviewService, stepService, userService,recipeRepository,
+                ingredientService,tagService,recipeImageService);
     }
 
     @Bean

@@ -9,4 +9,6 @@ public interface StepService {
     List<Step> findAllByRecipeId(Long recipeId);
 
     double getEstimatedDuration(Recipe r);
+
+    void saveOrUpdate(Step step);
 }

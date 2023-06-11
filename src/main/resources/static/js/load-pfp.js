@@ -33,6 +33,13 @@ $(document).ready(function() {
     updateProfilePicture();
   }
 
+  $(document).ready(function() {
+    $('.checkmark').tooltip({
+      title: 'Verified Chef',
+      placement: 'top'
+    });
+  });
+
   // $('#profile_dropdownMenuButton').click(function(event) {
   //   event.preventDefault();
   //   updateProfilePicture();

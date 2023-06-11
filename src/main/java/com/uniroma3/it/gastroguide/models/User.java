@@ -1,6 +1,7 @@
 package com.uniroma3.it.gastroguide.models;
 
 
+import com.uniroma3.it.gastroguide.constants.StaticURLs;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -202,5 +203,13 @@ public class User implements UserDetails {
 
     public String getFullName() {
         return this.firstName+" "+this.lastName;
+    }
+
+    public String getAbsoluteUrl() {
+        return StaticURLs.CHEF_DETAIL_URL+this.getFullName();
+    }
+
+    public boolean  isVerified(){
+        return  this.verifiedChef;
     }
 }

@@ -1,5 +1,6 @@
 package com.uniroma3.it.gastroguide.services;
 
+import com.uniroma3.it.gastroguide.dtos.RecipeDto;
 import com.uniroma3.it.gastroguide.models.Ingredient;
 import com.uniroma3.it.gastroguide.models.Recipe;
 import com.uniroma3.it.gastroguide.models.User;
@@ -29,4 +30,6 @@ public interface RecipeService {
 
 
     List<Recipe> getLatest3();
+
+    void createFromDto(RecipeDto recipe);
 }

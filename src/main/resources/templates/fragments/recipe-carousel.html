@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="contentTemplate='recipe-carousel'">
+
+<body>
+<div id="recipe-carousel" class="carousel slide" data-bs-ride="carousel" th:fragment="recipe-carousel(recipe)">
+  <div class="carousel-indicators">
+    <th:block th:each="image, stat : ${recipe.getImages()}">
+      <button type="button" data-bs-target="#recipe-carousel" th:data-bs-slide-to="${stat.index}" th:attr="aria-current=${stat.index == 0 ? 'true' : 'false'},class=${stat.index == 0 ? 'active' : ' '}, aria-label='Slide ' + (${stat.index + 1})"></button>
+    </th:block>
+  </div>
+  <div class="carousel-inner">
+    <th:block th:each="image, stat : ${recipe.getImages()}">
+      <div class="carousel-item" th:classappend="${stat.index == 0 ? 'active' : ''}">
+        <img th:src="${image.getUrl()}" class="d-block w-100 carousel-item-img" alt="Recipe Image">
+      </div>
+    </th:block>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#recipe-carousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#recipe-carousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+</body>
+</html>

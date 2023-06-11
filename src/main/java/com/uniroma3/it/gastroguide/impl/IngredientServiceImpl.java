@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Qualifier("ingredientServiceImpl")
@@ -36,5 +37,15 @@ public class IngredientServiceImpl implements IngredientService {
     @Override
     public List<Ingredient> findAllByNameContaining(String name){
         return ingredientRepository.findAllByNameContaining(name);
+    }
+
+    @Override
+    public Optional<Ingredient> findByName(String name) {
+        return  ingredientRepository.findByName(name);
+    }
+
+    @Override
+    public void saveOrUpdate(Ingredient ingredient) {
+        this.ingredientRepository.save(ingredient);
     }
 }

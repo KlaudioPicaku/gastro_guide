@@ -1,5 +1,6 @@
 package com.uniroma3.it.gastroguide.services;
 
+import com.uniroma3.it.gastroguide.dtos.TagDto;
 import com.uniroma3.it.gastroguide.models.Tag;
 
 import java.util.List;
@@ -11,4 +12,11 @@ public interface TagService {
 
     Optional<Tag> findByTitleContainingIgnoreCase(String title);
 
+    List<Tag> findAll();
+
+    Optional<Tag> findByTitle(String name);
+
+    void saveOrUpdate(Tag tag);
+
+    void bulkCreate(List<TagDto> tagDtos);
 }
