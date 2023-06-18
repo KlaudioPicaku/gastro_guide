@@ -139,7 +139,10 @@ public class Recipe {
         return steps;
     }
 
-    public Set<RecipeImage> getImages(){
-        return  this.images;
+    public Set<RecipeImage> getImages() {
+        Set<RecipeImage> sortedImages = new TreeSet<>(Comparator.comparingLong(RecipeImage::getId));
+        sortedImages.addAll(this.images);
+
+        return sortedImages;
     }
 }

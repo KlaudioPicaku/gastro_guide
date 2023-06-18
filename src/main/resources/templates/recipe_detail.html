@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:include="/fragments/base :: html" th:with="contentTemplate='recipe_detail'" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <body>
 <div class="container mt-3" th:fragment="content">
@@ -17,19 +18,18 @@
     <div class="row mt-4">
       <div class="col-md-10">
         <!-- Check if user is logged in -->
-        <!-- If not logged in, show login or sign up message -->
         <div th:if="${reviewLeft}">
           <p-dark id="review_left">Thanks for reviewing this Recipe!</p-dark>
         </div>
         <div th:if="${request != null and request.isUserInRole('ROLE_ADMIN') or request.isUserInRole('ROLE_USER')} and not ${reviewLeft}">
-          <p-dark id="write_a_review_statement">Have you seen this Review? <a class="modern-link" id="write_a_review">Leave your thoughts!</a></p-dark>
+          <p-dark id="write_a_review_statement">Have you tried this recipe? <a class="modern-link" id="write_a_review">Leave your thoughts!</a></p-dark>
         </div>
         <div th:unless="${request != null and request.isUserInRole('ROLE_ADMIN') or request.isUserInRole('ROLE_USER')}">
           <a class="modern-link" href="/register">Login or Sign Up to leave your thoughts!</a>
         </div>
         <div th:if="${request != null and request.isUserInRole('ROLE_ADMIN')}">
-          <a  id="edit_recipe" class="btn btn-warning" th:href="@{'/chef/recipe/edit?id=' + ${recipe.getId()}}">Edit</a>
-          <a  id="delete_recipe" class="btn btn-danger" th:href="@{'/chef/recipe/delete_confirm?id=' + ${recipe.getId()}}">Delete</a>
+          <a id="edit_recipe" class="btn btn-warning" th:href="@{'/chef/recipe/edit?id=' + ${recipe.getId()}}">Edit</a>
+          <a id="delete_recipe" class="btn btn-danger" th:href="@{'/chef/recipe/delete_confirm?id=' + ${recipe.getId()}}">Delete</a>
         </div>
         <!-- If logged in, show review form -->
       </div>
@@ -47,13 +47,33 @@
           <div id="reviewModal"></div>
         </div>
       </div>
-<!--  <div class="steps">-->
-<!--    <div class="step" th:each="step : ${recipe.getSteps()}"-->
-<!--  </div>-->
-<!--  </div>-->
-<!--</div>-->
     </div>
   </div>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Ingredienti</h5>
+      <ul class="list-group">
+        <!-- Add your ingredients here -->
+        <li class="list-group-item" th:each="ingredient : ${recipe.getIngredients()}" th:text="${ingredient.getName()}"><i th:text="${ingredient.getQuantity()}"></ith:text>/li>
+
+        <!-- Add more ingredients as needed -->
+      </ul>
+    </div>
+  </div>
+  <div class="steps mt-2" id="stepsContainer">
+    <div class="step-container">
+      <div class="step" th:each="step : ${recipe.getSteps()}">
+        <div th:replace="~{fragments/step-fragment :: step-fragment(${step})}"></div>
+      </div>
+    </div>
+    <div class="arrow arrow-left">
+      <i class="bi bi-chevron-left"></i>
+    </div>
+    <div class="arrow arrow-right">
+      <i class="bi bi-chevron-right"></i>
+    </div>
+  </div>
+  <div id="formContainer"></div>
 </div>
 </body>
 </html>

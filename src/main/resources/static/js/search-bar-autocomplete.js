@@ -2,6 +2,15 @@ var searchCache = {};
 var searchResults = $("#searchResults");
 
 $(document).ready(function() {
+  if($('.custom-badge').length>=1){
+  $('.custom-badge').on('click', function() {
+
+    const tag = $(this).data('tag');
+    window.location.href = '/search?tag=' + encodeURIComponent(tag);
+
+  });
+  }
+
   $("#searchInput").on("input", function() {
     var searchTerm = $(this).val();
     if (searchTerm.length > 0) {

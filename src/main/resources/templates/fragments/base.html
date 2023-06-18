@@ -33,6 +33,7 @@
     <link href="/static/css/search-bar-autocomplete.css" rel="stylesheet">
     <link href="/static/css/recipe-carousel-home.css" rel="stylesheet">
     <link href="/static/css/recipe-card.css" rel="stylesheet">
+    <link href="/static/css/step-style.css" rel="stylesheet">
 
 
 </head>
@@ -42,11 +43,10 @@
     <!-- Contenuto -->
     <div th:replace="~{${contentTemplate} :: content}"></div>
 </div>
-<div class="container h-100 mt-12" style="position: relative;">
+<div class="container h-100 mt-12" style="position: relative;z-index: -1100;">
     <p style="position: absolute; bottom: 0; left: 0;">Gastro Guide &copy; 2023</p>
 </div>
 <footer th:replace="~{fragments/footer.html :: footer}">
-
 </footer>
 </body>
 </html>

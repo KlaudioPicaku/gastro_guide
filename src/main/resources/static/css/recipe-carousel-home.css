@@ -3,30 +3,67 @@
   position: relative;
   overflow: hidden;
 }
-
+#recipe-carousel {
+    height: 400px;
+    position: relative;
+}
 .carousel-inner {
   height: 100%;
+}
+.container-scroll-custom {
+    overflow: hidden;
+    position: relative;
+}
+
+.scroll-wrapper-custom {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-left: 20px; /* Add this line */
+}
+
+.scroll-wrapper-custom::-webkit-scrollbar {
+    display: none;
+}
+
+.scroll-wrapper-custom::-webkit-scrollbar {
+    display: none;
+}
+.carousel-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: var(--bg-image);
+    background-size: cover;
+    background-position: center;
+    filter: blur(10px);
+    z-index: 0; /* Push the background image behind the content */
 }
 
 .carousel-item {
     position: relative;
     height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    overflow: hidden; /* Hide any overflow to prevent stretching */
 }
 
         .carousel-item-img {
-           position: absolute;
-             top: 50%;
-             left: 50%;
-             transform: translate(-50%, -50%);
-             max-width: 100%;
-             max-height: 100%;
-             width: auto; /* Allow the image to shrink if necessary */
-             height: auto; /* Same function */
-             object-fit: contain; /* Scale down the image while maintaining aspect ratio */
-             z-index: 1; /* Bring the foreground image to the front */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            z-index: 1;
         }
 
         .carousel-item-blur {
@@ -38,31 +75,50 @@
             filter: blur(8px);
         }
 
-    .carousel-item-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        padding: 20px;
-        background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 80%);
-        color: white;
-        z-index: 2;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-end;
-        border-radius: 50%;
-        overflow: hidden;
-    }
-        .carousel-item-citation {
-          font-size: 18px;
-          margin-bottom: 10px;
-        }
+.carousel-item-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(to top, rgba(150, 150, 150, 0.8), rgba(200, 200, 200, 0));
+    color: white;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px 10px 0 0;
+}
 
-        .carousel-item-rating {
-          font-size: 14px;
-        }
+.custom-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 5px;
+    background-color: #f6b8b8;
+    color: #ffffff;
+    border-radius: 10px;
+    cursor: pointer;
+}
 
+.custom-badge:hover {
+    background-color: #e0e0e0;
+}
+
+.carousel-item-citation {
+    font-size: 18px;
+    margin-bottom: 10px;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: white;
+}
+.carousel-item-rating {
+    font-size: 14px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: white;
+}
         .carousel-indicators button {
           width: 10px;
           height: 10px;

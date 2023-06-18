@@ -64,9 +64,9 @@ public class RecipeController {
         User user= userService.getUserByUsername(auth.getName()).get();
         recipe.setUserId(user.getId());
         System.out.println(recipe.toString());
-        for (StepDto st: recipe.getSteps()){
-            System.out.println(st.toString());
-        }
+//        for (StepDto st: recipe.getSteps()){
+//            System.out.println(st.toString());
+//        }
         recipeService.createFromDto(recipe);
 
         return "redirect:/";

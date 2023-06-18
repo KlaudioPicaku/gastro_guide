@@ -25,11 +25,11 @@ function starryNight() {
 
 function updateReviewCounter() {
 if($("#review_counter").length>0){
-  var film = $("#filmId").val();
+  var recipe = $("#recipeId").val();
   $.ajax({
     url: "/review-count",
     method: "GET",
-    data: { film: film },
+    data: { recipe: recipe },
     success: function(response) {
       console.log(response);
       $("#rating_value").text(response.average);
@@ -102,7 +102,7 @@ function loadForm() {
             title: $('#title').val(),
             rating: parseInt($('#rating').val()),
             body: $('#body').val(),
-            filmId: parseInt($("#filmId").val())
+            recipeId: parseInt($("#recipeId").val())
           };
           console.log(formData);
 

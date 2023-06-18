@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:util="urn:java:org.thymeleaf.expression.Strings" th:with="contentTemplate='step-fragment'">
+<body>
+<div th:fragment="step-fragment(step)">
+  <div class="step-card">
+    <div class="step-title" th:text="${step.getTitle()}"></div>
+    <div class="step-body" th:text="${step.getBody()}"></div>
+    <div class="step-duration">
+      <span class="me-1"><i class="fas fa-clock"></i></span>
+      <span th:text="${step.getEstimatedDuration()}"></span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

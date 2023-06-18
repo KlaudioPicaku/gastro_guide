@@ -31,6 +31,7 @@ $(document).ready(function () {
                 .text(newTag);
             select.append(option);
             selectedTags.push(newTag);
+            console.log(selectedTags)
             tagDtosInput.val(JSON.stringify(selectedTags));
             newTagInput.val('');
 

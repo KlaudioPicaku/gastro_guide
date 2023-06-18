@@ -4,23 +4,81 @@
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px); /* For Safari */
+    -webkit-backdrop-filter: blur(8px);
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Vertically center the contents */
-    align-items: center; /* Horizontally center the contents */
-    text-align: center; /* Center the text */
+    justify-content: flex-start;
+    align-items: center;
+    height: 430px;
+    text-align: center;
+}
+
+.author-overlay {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+
+.author-name {
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.checkmark {
+    color: #fff;
+    margin-left: 5px;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    margin-top: 60px;
+}
+
+.card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-text {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 10px;
+}
+
+.card-tags {
+    margin-top: 10px;
+}
+
+.card-tags .badge {
+    margin: 2px;
+}
+
+.card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.card-tags .badge {
+    margin: 2px;
 }
 .clock-icon {
-    font-size: 1rem; /* Adjust the font size as needed */
+    font-size: 1rem;
     color: white;
 }
 
 .card-img-top {
-    width: 98%; /* Adjust the width as desired */
-    height: auto; /* Maintain aspect ratio */
-    border-radius: 8px; /* Add rounded edges */
-    object-fit: cover; /* Scale and crop the image to fit the container */
+    width: 98%;
+    height: 200px;
+    border-radius: 8px;
+    object-fit: contain;
 }
 
 .hover-content {
@@ -54,7 +112,7 @@
 .scroll-wrapper {
   display: flex;
   flex-wrap: nowrap;
-  width: 100%;
+  width: 91%;
   overflow-x: auto;
   scroll-behavior: smooth;
   scrollbar-width: none; /* Disable standard scroll bar */
@@ -112,7 +170,17 @@
     color: #86a1db;
     margin-right: 5px;
 }
+.star-rating .star {
+    display: inline-block;
+    font-size: 24px;
+    cursor: pointer;
+    color: gray;
+}
 
+.star-rating .star.yellow,
+.star-rating .star:hover {
+    color: yellow;
+}
 .rating-value {
     font-size: 1rem;
     color: #ffffff;
@@ -133,14 +201,12 @@
         }
 
 .author-overlay {
-    position: relative;
-    top: 37%;
-    left: 10px;
     display: flex;
     align-items: center;
-    color: #fff;
+    position: absolute;
+    top: 10px;
+    left: 10px;
 }
-
 .checkmark {
     color: #fff;
 }

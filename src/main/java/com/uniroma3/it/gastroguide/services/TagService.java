@@ -14,9 +14,12 @@ public interface TagService {
 
     List<Tag> findAll();
 
+    List<Tag> findAllByUserIsNotNull();
+
     Optional<Tag> findByTitle(String name);
 
     void saveOrUpdate(Tag tag);
 
     void bulkCreate(List<TagDto> tagDtos);
+
 }

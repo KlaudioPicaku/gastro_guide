@@ -20,4 +20,6 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
 
     Optional<Tag> findByTitle(String name);
 
+    List<Tag> findAllByUserIsNotNull();
+
 }

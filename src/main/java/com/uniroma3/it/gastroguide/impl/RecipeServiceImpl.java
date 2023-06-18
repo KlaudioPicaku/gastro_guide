@@ -164,11 +164,14 @@ public class RecipeServiceImpl implements RecipeService {
         }
 
         for(TagDto t: recipeDto.getTagDtos()){
-            Optional<Tag> tagOptional = tagService.findByTitle(t.getName());
+            String tagDtoName = t.getName().replaceAll("[\"\\[\\]]", "");
+            System.out.println(tagDtoName);
+
+            Optional<Tag> tagOptional = tagService.findByTitle(tagDtoName);
             Tag tag;
             if (!tagOptional.isPresent()){
                 tag = new Tag();
-                tag.setTitle(t.getName());
+                tag.setTitle(tagDtoName);
             }else{
                 tag = tagOptional.get();
             }

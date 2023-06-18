@@ -5,14 +5,14 @@ var filter = ""; // Track the current rating filter
 function loadReviews() {
   if (isLoading) return; // Prevent multiple simultaneous requests
   isLoading = true;
-  var film = $("#filmId").val();
+  var recipe = $("#recipeId").val();
 
   if ($("#reviewsContainer").length > 0 && $('.review-entry-container').length < (parseInt($('#review_counter').text()))) {
     // Send a request to fetch reviews from your server or API
     $.ajax({
       url: '/api/reviews/load',
       method: 'GET',
-      data: { page: page, film: film, rating: filter },
+      data: { page: page, recipe: recipe, rating: filter },
       success: function(response) {
         var reviews = response.reviews;
         var $container = $('#reviewsContainer');

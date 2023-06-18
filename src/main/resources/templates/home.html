@@ -4,13 +4,18 @@
 
 <body>
 <div class="container mt-3" th:fragment="content">
+    <div class="container-scroll-custom badges-container">
+        <div class="scroll-wrapper-custom row-scroll">
+            <span class="custom-badge" th:each="tag : ${defaultTags}" th:data-tag="${tag.getTitle()}" th:text="${tag.getTitle()}"></span>
+        </div>
+    </div>
 
     <h3 style="color:white">Latest Recipes:</h3>
 
     <div th:replace="~{fragments/recipe_carousel_home :: recipe-carousel-home(${carouselRecipes})}"></div>
         <div class="container mt-2">
             <h2 style="color:white" >Most Famous Recipes:</h2>
-            <div class="container-scroll">
+            <div class="container-scroll card-container">
                 <div class="scroll-wrapper row-scroll" style="margin-left: 50px;">
                     <div class="col-sm-3 mt-2 slideRight" th:each="recipe : ${recipes}">
                         <div th:replace="~{fragments/recipe_card_fragment :: recipe-card(${recipe})}"></div>

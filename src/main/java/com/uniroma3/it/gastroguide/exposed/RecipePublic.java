@@ -136,7 +136,8 @@ public class RecipePublic {
     }
 
     public double getEstimatedDuration() {
-        return estimatedDuration;
+
+        return (Math.round(estimatedDuration*100.0)/100.0);
     }
 
     public void setEstimatedDuration(double estimatedDuration) {

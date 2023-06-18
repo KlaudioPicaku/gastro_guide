@@ -37,6 +37,11 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
+    public List<Tag> findAllByUserIsNotNull() {
+        return tagRepository.findAllByUserIsNotNull();
+    }
+
+    @Override
     public Optional<Tag> findByTitle(String name) {
         return tagRepository.findByTitle(name);
     }

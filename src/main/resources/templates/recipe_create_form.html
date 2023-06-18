@@ -77,7 +77,7 @@
                     <label for="recipeTags" style="color:white">Tags:</label>
                     <select class="select" id="recipeTags" multiple>
                         <option value=" "></option>
-                        <option th:each="tag : ${tags}" th:value="${tag.id}" th:text="${tag.title}"></option>
+                        <option th:each="tag : ${tags}" th:value="${tag.title}" th:text="${tag.title}"></option>
                     </select>
 
                 </div>

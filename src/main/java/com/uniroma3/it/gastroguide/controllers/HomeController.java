@@ -61,6 +61,8 @@ public class HomeController {
 //        for(RecipePublic r : publicRecipes){
 //            System.out.println(r.getCoverPath());
 //        }
+        List<Tag> defaultTags=tagService.findAllByUserIsNotNull();
+        model.addAttribute("defaultTags",defaultTags);
         model.addAttribute("recipes", publicRecipes);
         model.addAttribute("carouselRecipes", carouselRecipes);
         model.addAttribute("request", request);
