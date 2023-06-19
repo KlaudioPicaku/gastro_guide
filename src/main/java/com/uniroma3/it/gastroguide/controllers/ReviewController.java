@@ -106,7 +106,7 @@ public class ReviewController {
         }
 
         List<ReviewPublicRestDto> reviewsPublic = reviews.stream()
-                .map(r -> new ReviewPublicRestDto(r.getTitle(), r.getBody(), r.getuser().getUsername(), r.getRating(), r.getuser().getImage(),r.getId()))
+                .map(r -> new ReviewPublicRestDto(r.getTitle(), r.getBody(), r.getuser().getFullName(), r.getRating(), r.getuser().getImage(),r.getId()))
                 .collect(Collectors.toList());
 
         int pageSize = 10;

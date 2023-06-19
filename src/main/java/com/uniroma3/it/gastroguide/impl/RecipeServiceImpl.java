@@ -5,6 +5,7 @@ import com.uniroma3.it.gastroguide.dtos.IngredientDto;
 import com.uniroma3.it.gastroguide.dtos.RecipeDto;
 import com.uniroma3.it.gastroguide.dtos.StepDto;
 import com.uniroma3.it.gastroguide.dtos.TagDto;
+import com.uniroma3.it.gastroguide.exposed.RecipePublic;
 import com.uniroma3.it.gastroguide.models.*;
 import com.uniroma3.it.gastroguide.repositories.RecipeRepository;
 import com.uniroma3.it.gastroguide.services.*;
@@ -13,6 +14,8 @@ import com.uniroma3.it.gastroguide.utils.FileUploader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -74,6 +77,16 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public void saveOrUpdate(Recipe recipe) {
+        User user=recipeRepository.findById(recipe.getId()).get().getUser();
+        recipe.setUser(user);
+        List<Step> steps=recipe.getSteps();
+        for(Step s:steps){
+            Optional<Step> stepOptional=stepService.findAllByRecipeAndTitle(recipe,s.getTitle());
+            if(!stepOptional.isPresent()){
+                Step newStep=new Step(s.getTitle(),s.getBody(),s.getCreatedOn(),s.getUpdatedOn(), recipe.getUser(),recipe,s.getEstimatedDuration());
+                stepService.saveOrUpdate(newStep);
+            }
+        }
         recipeRepository.save(recipe);
     }
 
@@ -206,6 +219,35 @@ public class RecipeServiceImpl implements RecipeService {
             System.out.println("-------------------");
         }
 
+    }
+
+    @Override
+    public List<RecipePublic> searchPublicByTerm(String term) {
+        List<Recipe> recipes = recipeRepository.findRecipesByKeyword(term);
+
+        return recipes.stream()
+                .map(recipe -> new RecipePublic(recipe.getId(), recipe.getName(), recipe.getCoverPath(),recipe.getDescription()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RecipePublic> findByTagTitle(String tag) {
+        List<Recipe> recipes = recipeRepository.findByTagsTitle(tag);
+        System.out.println("---------");
+        System.out.println(recipes.size());
+        System.out.println("---------");
+
+        return recipes.stream()
+                .map(recipe -> new RecipePublic(recipe.getId(), recipe.getName(), recipe.getCoverPath(),recipe.getDescription()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RecipePublic> findAllRecipePublics() {
+        List<Recipe> recipes = recipeRepository.findAll();
+        return recipes.stream()
+                .map(recipe -> new RecipePublic(recipe.getId(), recipe.getName(), recipe.getCoverPath(),recipe.getDescription()))
+                .collect(Collectors.toList());
     }
 
     @Override

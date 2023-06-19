@@ -8,15 +8,15 @@
         <div class="row">
             <div class="col-md-3">
                 <input type="hidden" name="page" value="1">
-                <label style="color:white" for="filmId">Film:</label>
-                <select class="select" id="filmId" name="film">
+                <label style="color:lightpink" for="recipeId">Recipe:</label>
+                <select class="select" id="recipeId" name="recipe">
                     <option value="">All Recipes</option>
                     <option th:each="recipe : ${recipes}" th:value="${recipe.getId()}" th:text="${recipe.getName()}"
                             th:selected="${currentRecipe != null and recipe.getId() == currentRecipe.getId()}"></option>
                 </select>
             </div>
             <div class="col-md-3">
-                <label style="color:white" for="rating">Rating:</label>
+                <label style="color:lightpink" for="rating">Rating:</label>
                     <select class="form-select" id="rating" name="rating">
                         <option value="">All Ratings</option>
                         <option value="1" th:selected="${currentRating == 1}">1 Star</option>
@@ -27,7 +27,7 @@
                     </select>
             </div>
             <div class="col-md-3">
-                <label style="color:white" for="order">Order:</label>
+                <label style="color:lightpink" for="order">Order:</label>
                     <select class="form-select" id="order" name="order">
                         <option value="">Original Order</option>
                         <option value="desc" th:selected="${currentOrdering == 'desc'}">Descending</option>
@@ -43,8 +43,8 @@
     <br>
     <table class="slidDown table" style="color:white">
         <thead>
-        <tr>
-            <div th:if="${#authentication.getAuthorities().contains('ROLE_ADMIN')}">
+        <tr style="color: lightpink">
+            <div th:if="${request != null and request.isUserInRole('ROLE_ADMIN')}">
                 <th scope="col">id</th>
             </div>
             <th scope="col">Author</th>
@@ -64,23 +64,23 @@
             </td>
         </tr>
         <tr class="slideDown" th:each="review: ${reviews}">
-            <div th:if="${#authentication.getAuthorities().contains('ROLE_ADMIN')}">
-                <td th:text="${review.getReviewId()}"></td>
+            <div th:if="${request != null and request.isUserInRole('ROLE_ADMIN')}">
+                <td style="color: lightpink" th:text="${review.getReviewId()}"></td>
             </div>
-            <td th:text="${review.getReviewAuthor()}"></td>
-            <td th:text="${review.getReviewTitle()}"></td>
-            <td style="word-break: break-all;" th:text="${review.getReviewBody()}"></td>
-            <td><a class="modern-link" th:href="@{${review.getFilm().getAbsoluteUrl()}}" th:text="${review.getFilm().toString()}"></a></td>
+            <td style="color: lightpink" th:text="${review.getReviewAuthor()}"></td>
+            <td style="color: lightpink" th:text="${review.getReviewTitle()}"></td>
+            <td style="word-break: break-all; color:lightpink;" th:text="${review.getReviewBody()}"></td>
+            <td><a class="modern-link" style="color:lightpink" th:href="@{${review.getRecipe().getAbsoluteUrl()}}" th:text="${review.getRecipe().getName()}"></a></td>
             <td>
                 <span class="star">&#9733;</span>
-                <span class="rating-value text-white" style="color:white" th:text="${review.getReviewRating()}+'/5'"></span>
+                <span class="rating-value text-light-pink" style="color:lightpink" th:text="${review.getReviewRating()}+'/5'"></span>
             </td>
             <td>
                 <div class="d-flex">
-                    <div th:if="${#authentication.getAuthorities().contains('ROLE_ADMIN') or #authentication.getPrincipal().getName() == review.getReviewAuthor()}">
+                    <div th:if="${request != null and request.isUserInRole('ROLE_ADMIN') or  request.getUserPrincipal() == review.getReviewAuthor()}">
                         <a id="delete_review" class="btn btn-danger" th:href="@{'/reviews/delete_confirm?id=' + ${review.getReviewId()}}"><i class="bi bi-trash"></i></a>
                     </div>
-                    <div th:if="${#authentication.getPrincipal().getName() == review.getReviewAuthor()}">
+                    <div th:if="${request != null and request.isUserInRole('ROLE_ADMIN') or request.isUserInRole('ROLE_USER')}">
                         <a id="edit_review" class="btn btn-warning" th:href="@{'/reviews/edit?id=' + ${review.getReviewId()}}"><i class="bi bi-pencil-square"></i></a>
                     </div>
                 </div>
@@ -90,17 +90,6 @@
     </table>
     <div>
         <div th:replace="fragments/pagination :: pagination(${maxNumberOfPages})"></div>
-<!--        &lt;!&ndash; Previous page button &ndash;&gt;-->
-<!--        <a th:if="${page > 1}" th:href="@{${'/?page=' + (page - 1)}}" class="pagination-link">Previous</a>-->
-<!--        &lt;!&ndash; Page numbers &ndash;&gt;-->
-<!--                <span th:if="${maxNumberOfPages > 0}">-->
-<!--                    <span th:each="pageNumber : ${#numbers.sequence(1, maxNumberOfPages)}">-->
-<!--                        <a th:href="@{${'/?page=' + pageNumber}}" th:class="${pageNumber == page ? 'active' : ''}" class="modern-link pagination-link" th:text="${pageNumber}"></a>-->
-<!--                    </span>-->
-<!--                </span>-->
-
-<!--        &lt;!&ndash; Next page button &ndash;&gt;-->
-<!--        <a th:if="${page < maxNumberOfPages}" th:href="@{${'/?page=' + (page + 1)}}" class="modern-link pagination-link">Next</a>-->
     </div>
 </div>
 </body>

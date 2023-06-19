@@ -43,7 +43,7 @@ public class HomeController {
     public String home(HttpServletRequest request, Model model) {
         List<Recipe> recipes = recipeService.findAll();
 
-        // Sort recipes by average rating (null values will be treated as the maximum value)
+        // Sort sort per media recensione  (i valori null li tratto come massimo)
         Comparator<Recipe> ratingComparator = Comparator.comparingDouble(recipe -> {
             Double averageRating = recipeService.getAverageDoubleRating(recipe);
             return averageRating != null ? -averageRating : Double.MAX_VALUE;

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Qualifier("stepServiceImpl")
@@ -34,5 +35,15 @@ public class StepServiceImpl implements StepService {
     @Override
     public void saveOrUpdate(Step step) {
         this.stepRepository.save(step);
+    }
+
+    @Override
+    public List<Step> findAll() {
+        return stepRepository.findAll();
+    }
+
+    @Override
+    public Optional<Step> findAllByRecipeAndTitle(Recipe recipe, String title) {
+        return stepRepository.findByRecipeAndTitle(recipe,title);
     }
 }

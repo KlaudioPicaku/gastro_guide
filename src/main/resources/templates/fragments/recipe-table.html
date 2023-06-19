@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="contentTemplate='recipe-table'">
+
+<body>
+<div th:fragment="recipe-table(recipes)">
+  <table class="slidDown table" style="color:lightpink">
+    <thead>
+    <tr>
+      <div th:if="${request.isUserInRole('ROLE_ADMIN')}">
+        <th scope="col">id</th>
+      </div>
+      <th scope="col">Cover</th>
+      <th scope="col">Name</th>
+      <th scope="col">Ingredients</th>
+    </tr>
+    <div th:if="${request != null and request.isUserInRole('ROLE_ADMIN')}">
+    </div>
+    </thead>
+    <tbody>
+    <tr th:if="${#lists.isEmpty(recipes)}">
+      <td colspan="5" class="text-center">
+        <div class="alert alert-info" role="alert">
+          <i class="bi bi-info-circle"></i> No Recipes to Display
+        </div>
+      </td>
+    </tr>
+    <tr class="slideDown" th:each="recipe: ${recipes}">
+      <div th:if="${request.isUserInRole('ROLE_ADMIN')}">
+        <td th:text="${recipe.getId()}"></td>
+      </div>
+      <td><img th:src="@{${recipe.getCoverPath()}}" class="rounded-left mr-2" width="50" height="40" alt="Recipe Cover" /></td>
+      <td><a class="modern-link" style="color:lightpink" th:href="@{${recipe.getAbsoluteUrl()}}" th:text="${recipe.getName()}"></a></td>
+      <td><a class="modern-link" style="color:lightpink" th:href="'/ingredients/recipe?page=1&id='+ ${recipe.getId()}">View Ingredients...</a></td>
+      <td>
+        <a id="edit_recipe" class="btn btn-warning" th:href="@{'/chef/recipe/edit?id=' + ${recipe.getId()}}">Edit</a>
+        <a id="delete_recipe" class="btn btn-danger" th:href="@{'/chef/recipe/delete_confirm?id=' + ${recipe.getId()}}">Delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

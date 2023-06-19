@@ -4,6 +4,7 @@ import com.uniroma3.it.gastroguide.models.Ingredient;
 import com.uniroma3.it.gastroguide.models.Recipe;
 import com.uniroma3.it.gastroguide.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,4 +28,18 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
 
     List<Recipe> findAllByNameContainingIgnoreCase(String term);
+
+    @Query("SELECT r FROM Recipe r JOIN r.steps s JOIN r.ingredients i JOIN r.tags t " +
+            "WHERE r.name LIKE %:searchString% OR " +
+            "r.description LIKE %:searchString% OR " +
+            "s.title LIKE %:searchString% OR " +
+            "s.body LIKE %:searchString% OR " +
+            "r.user.firstName LIKE %:searchString% OR " +
+            "r.user.lastName LIKE %:searchString% OR " +
+            "i.name LIKE %:searchString% OR " +
+            "t.title LIKE %:searchString%")
+    List<Recipe> findRecipesByKeyword(String searchString);
+
+
+    List<Recipe> findByTagsTitle(String tagName);
 }

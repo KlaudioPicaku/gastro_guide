@@ -4,8 +4,10 @@
 <div th:fragment="recipe-card(recipe)">
     <div class="recipe-card">
         <div class="cover-image">
-            <img th:src="${recipe.getCoverPath()}" class="card-img-top" alt="Recipe Image">
-
+            <div class="image-container">
+                <img th:src="${recipe.getCoverPath()}" class="card-img-top" alt="Recipe Image">
+                <div class="recipe-image-overlay"></div>
+            </div>
         </div>
         <div class="card-rating">
             <span class="star">&#9733;</span>
@@ -25,7 +27,12 @@
             <p class="card-text" th:text="${#strings.abbreviate(recipe.getDescription(), 100)}"></p>
         </div>
         <div class="card-tags">
-            <span class="badge badge-primary" th:each="tag : ${recipe.getTags()}">[[${tag}]]</span>
+            <div th:each="tag : ${recipe.getTags()}">
+                <a class="modern-link" th:href="'/search?tag=' + ${tag} + '&page=1'">
+                    <span class="badge badge-primary" th:text="${tag}"></span>
+                </a>
+            </div>
+
         </div>
     </div>
 </div>

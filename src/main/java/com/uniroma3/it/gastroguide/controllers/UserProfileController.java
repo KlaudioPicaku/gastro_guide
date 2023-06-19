@@ -2,7 +2,13 @@ package com.uniroma3.it.gastroguide.controllers;
 
 import com.uniroma3.it.gastroguide.constants.DefaultSaveLocations;
 import com.uniroma3.it.gastroguide.constants.GUIconstants;
+import com.uniroma3.it.gastroguide.dtos.UserProfileDto;
+import com.uniroma3.it.gastroguide.exposed.ReviewPublic;
+import com.uniroma3.it.gastroguide.models.Recipe;
+import com.uniroma3.it.gastroguide.models.Review;
 import com.uniroma3.it.gastroguide.models.User;
+import com.uniroma3.it.gastroguide.services.RecipeService;
+import com.uniroma3.it.gastroguide.services.ReviewService;
 import com.uniroma3.it.gastroguide.services.UserService;
 import com.uniroma3.it.gastroguide.utils.FileNameGenerator;
 import com.uniroma3.it.gastroguide.utils.FileUploader;
@@ -11,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,11 +25,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 public class UserProfileController {
     @Autowired
     private UserService userService;
+
 
 
     @PostMapping("/update/profile")

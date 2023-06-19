@@ -8,7 +8,7 @@
             <span class="profile-name ml-2" th:text="${request.userPrincipal?.name}"></span>
         </button>
         <div class="dropdown-menu text-align-right" id="profile_dropdown_menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="/profile?page=1&film=&rating=&order=">
+            <a class="dropdown-item" href="/profile?page=1&recipe=&rating=&order=">
                 <i class="bi bi-person-fill text-secondary me-2">Profile</i>
             </a>
             <div th:if="${request != null and request.isUserInRole('ROLE_ADMIN')}">

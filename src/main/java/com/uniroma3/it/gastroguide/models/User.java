@@ -54,6 +54,8 @@ public class User implements UserDetails {
     @Column (name="foto",nullable = true)
     private String image;
 
+    @Column(name="description")
+    private String description;
     @Column
     private boolean verifiedChef;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -78,6 +80,15 @@ public class User implements UserDetails {
     }
 
     // getters and setters
+
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public boolean isVerifiedChef() {
         return verifiedChef;

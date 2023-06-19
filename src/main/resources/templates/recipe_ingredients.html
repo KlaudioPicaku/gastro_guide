@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:insert="~{/fragments/base :: html}" th:with="contentTemplate='recipe_ingredients'" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<body>
+<div class="container mt-3" th:fragment="content">
+  <div class="row">
+    <div class=" col-md-4">
+      <div class="profile-detail ">
+        <img class="slideRight" th:src="${recipe.getCoverPath()}" alt="Recipe Picture">
+      </div>
+      <div class="mt-2 d-flex justify-content-center" th:if="${request != null and (request.isUserInRole('ROLE_ADMIN'))}">
+        <a  id="edit_film" class="btn btn-warning" th:href="@{'/chef/recipe/edit?id=' + ${recipe.getId()}}">Edit</a>
+        <a  id="delete_film" class="btn btn-danger" th:href="@{'/chef/recipe/delete_confirm?id=' + ${recipe.getId()}}">Delete</a>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <h2 style="color:#ffffff" th:text="${recipe.getName()}" class="font-weight-bold"></h2>
+      <a class="modern-link" th:href="${recipe.getUser().getAbsoluteUrl()}"><i style="color:#ffffff; font-size:11px" th:text="'by '+${recipe.getUser().getFullName()}" class="font-weight-bold"></i></a>
+      <h3 class="mt-2">Recipe/Ingredients</h3>
+      <div th:replace="fragments/ingredient-table :: ingredient-table(ingredients=${ingredients}, maxNumberOfPages=${maxNumberOfPages},recipeId=${recipe.getId()})"></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

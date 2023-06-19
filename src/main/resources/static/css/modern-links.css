@@ -5,6 +5,13 @@
   cursor:pointer;
   transition: border-bottom-color 0.3s ease-in-out;
 }
+.modern-link-pink {
+  color: #f6b8b8; /* Set the text color to white */
+  text-decoration: none;
+  border-bottom: none;
+  cursor:pointer;
+  transition: border-bottom-color 0.3s ease-in-out;
+}
 .modern-link:hover {
   border-bottom-color: transparent;
 }

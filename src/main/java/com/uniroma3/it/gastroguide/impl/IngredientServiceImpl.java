@@ -48,4 +48,9 @@ public class IngredientServiceImpl implements IngredientService {
     public void saveOrUpdate(Ingredient ingredient) {
         this.ingredientRepository.save(ingredient);
     }
+
+    @Override
+    public List<Ingredient> findByRecipe(Recipe recipe) {
+        return ingredientRepository.findAllByRecipesContaining(recipe);
+    }
 }

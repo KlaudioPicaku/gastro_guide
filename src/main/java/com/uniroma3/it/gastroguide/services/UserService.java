@@ -6,6 +6,7 @@ import com.uniroma3.it.gastroguide.models.tokens.VerificationToken;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserService extends UserDetailsService {
@@ -28,6 +29,8 @@ public interface UserService extends UserDetailsService {
     Optional<User> loadByEmail(String email);
 
     Optional<User> findByUsername(String name);
+
+    List<User> findByFirstNameContainingIgnoreCaseLastNameContainingIgnoreCase(String term);
 
 //    void processOAuth2User(OAuth2AuthenticationToken authenticationToken);
 }

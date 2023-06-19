@@ -18,4 +18,6 @@ public interface IngredientService {
     Optional<Ingredient> findByName(String name);
 
     void saveOrUpdate(Ingredient ingredient);
+
+    List<Ingredient> findByRecipe(Recipe recipe);
 }

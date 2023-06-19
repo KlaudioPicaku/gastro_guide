@@ -2,33 +2,50 @@
 <html xmlns:th="http://www.thymeleaf.org" th:with="contentTemplate='search-table'">
 
 <body>
-<div th:fragment="search-table(searchResults,term,maxNumberOfPages,page)">
-<table class="slidDown table" style="color:white">
-  <thead>
-  <tr>
-    <th scope="col"></th>
-    <th scope="col"></th>
-  </tr>
+<div th:fragment="search-table(searchResults,term,tag,maxNumberOfPages,page)">
+  <div class="custom-card-container">
+    <table class="slidDown table" style="color:white">
+      <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:if="${searchResults.isEmpty()}">
+        <td colspan="5" class="text-center">
+          <div class="alert alert-info" role="alert">
+            <i class="bi bi-info-circle"></i> No Results to Display
+          </div>
+        </td>
+      </tr>
+      <tr class="slideDown" th:each="result: ${searchResults}">
+        <td>
+          <div class="custom-card">
+            <div class="result-image">
+              <img th:src="@{${result.getImagePath()}}" alt="Result Image" />
+            </div>
+            <div class="result-name">
+              <a class="modern-link-pink" th:href="@{${result.getAbsoluteUrl()}}" th:text="${result.getName()}"></a>
+              <div class="result-description">
+                <p th:text="${result.getDescription()}"></p>
+              </div>
+            </div>
 
-  </thead>
-  <tbody>
-  <tr th:if="${searchResults.isEmpty()}">
-    <td colspan="5" class="text-center">
-      <div class="alert alert-info" role="alert">
-        <i class="bi bi-info-circle"></i> No Results to Display
-      </div>
-    </td>
-  </tr>
-  <tr class="slideDown" th:each="result: ${searchResults}">
-
-    <td><img th:src="@{${result.getImagePath()}}" class="rounded-left mr-2" width="45" height="80" alt="Result Image" /></td>
-    <td><a class="modern-link" th:href="@{${result.getAbsoluteUrl()}}" th:text="${result.getName()}"></a></td>
-  </tr>
-  </tbody>
-</table>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
   <form th:action="'/search?page=&?term='+${term}" method="GET">
-    <input type="hidden" id="termId" name="term" th:value="${term}">
-    <div th:replace="fragments/pagination :: pagination(${maxNumberOfPages})"></div>
+    <div th:if="${term}">
+      <input type="hidden" id="termId" name="term" th:value="${term}">
+    </div>
+    <div th:unless="${term}">
+      <input type="hidden" id="tagId" name="tag" th:value="${tag}">
+    </div>
+    <div th:replace="~{fragments/pagination :: pagination(${maxNumberOfPages})}"></div>
   </form>
 </div>
 </body>

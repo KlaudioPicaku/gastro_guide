@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:include="/fragments/base :: html" th:with="contentTemplate='recipe_detail'" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns:th="http://www.thymeleaf.org" th:insert="~{/fragments/base :: html}" th:with="contentTemplate='recipe_detail'" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <body>
 <div class="container mt-3" th:fragment="content">
   <div class="mt-4 mb-4">
@@ -13,7 +13,7 @@
       <a class="modern-link" th:href="${recipe.getAuthorAbsoluteUrl()}" style="font-style: italic" th:text="'by: ' + ${recipe.getAuthorName()} " ></a>
     </div>
     <!-- Recipe Carousel -->
-    <div th:replace="fragments/recipe-carousel :: recipe-carousel(${recipe})"></div>
+    <div th:replace="~{fragments/recipe-carousel :: recipe-carousel(${recipe})}"></div>
     <!-- Recipe Rating and Review Section -->
     <div class="row mt-4">
       <div class="col-md-10">
@@ -53,10 +53,7 @@
     <div class="card-body">
       <h5 class="card-title">Ingredienti</h5>
       <ul class="list-group">
-        <!-- Add your ingredients here -->
-        <li class="list-group-item" th:each="ingredient : ${recipe.getIngredients()}" th:text="${ingredient.getName()}"><i th:text="${ingredient.getQuantity()}"></ith:text>/li>
-
-        <!-- Add more ingredients as needed -->
+        <li class="list-group-item" th:each="ingredient : ${recipe.getIngredients()}" th:text="${ingredient.getName() + (ingredient.getQuantity() > 0 ? '  ' + (ingredient.getQuantity()+' grammi') : '')}"></li>
       </ul>
     </div>
   </div>

@@ -6,7 +6,7 @@ $(document).ready(function() {
   $('.custom-badge').on('click', function() {
 
     const tag = $(this).data('tag');
-    window.location.href = '/search?tag=' + encodeURIComponent(tag);
+    window.location.href = '/search?tag=' + encodeURIComponent(tag)+"&page=1";
 
   });
   }

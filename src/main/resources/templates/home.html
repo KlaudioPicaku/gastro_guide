@@ -15,6 +15,11 @@
     <div th:replace="~{fragments/recipe_carousel_home :: recipe-carousel-home(${carouselRecipes})}"></div>
         <div class="container mt-2">
             <h2 style="color:white" >Most Famous Recipes:</h2>
+            <span>
+                <div class="recipe-list-section mt-2">
+                    <a class="modern-link recipe-list-link" href="/search?term=all">View All Recipes...</a>
+                </div>
+            </span>
             <div class="container-scroll card-container">
                 <div class="scroll-wrapper row-scroll" style="margin-left: 50px;">
                     <div class="col-sm-3 mt-2 slideRight" th:each="recipe : ${recipes}">

@@ -55,6 +55,13 @@ public class Tag {
         return this.recipes;
     }
 
+    @Override
+    public String toString() {
+        return "Tag{" +
+                "title='" + title + '\'' +
+                '}';
+    }
+
     public void setRecipe(Set<Recipe> recipes) {
         this.recipes = recipes;
     }

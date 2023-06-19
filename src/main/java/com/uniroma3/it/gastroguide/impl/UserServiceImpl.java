@@ -153,6 +153,11 @@ public class UserServiceImpl implements UserService,UserDetailsService {
     }
 
     @Override
+    public List<User> findByFirstNameContainingIgnoreCaseLastNameContainingIgnoreCase(String term) {
+        return this.userRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(term,term);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DisabledException {
         Optional<User> user= userRepository.findByUsername(username);
         if (!user.isPresent()){

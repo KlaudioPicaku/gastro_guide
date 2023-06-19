@@ -34,6 +34,13 @@ public class RecipePublic {
 
     private List<RecipeImage> images;
 
+    public RecipePublic(Long Id,String name,String coverPath,String description){
+        this.id=Id;
+        this.name=name;
+        this.coverPath=coverPath;
+        this.description=description;
+    }
+
     public RecipePublic(Long id, String coverPath, String name, String authorName, String description,
                         String ratingValue, String reviewCount, double estimatedDuration,
                         int numberOfSteps, List<String> tags, String authorProfilePic, String authorAbosluteUrl, boolean verified,List<StepPublic> stepPublic,List<RecipeImage> images) {

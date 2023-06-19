@@ -56,6 +56,10 @@ public class Recipe {
         this.description = description;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getUserName(){
         return this.user.getFullName();
     }
@@ -128,6 +132,8 @@ public class Recipe {
         return StaticURLs.CHEF_DETAIL_URL+this.getUser().getFullName();
     }
 
+    public String getAbsoluteUrl(){ return StaticURLs.RECIPE_DETAIL_URL+this.getId(); }
+
     public List<Ingredient> getIngredients() {
         return ingredients;
     }
@@ -137,6 +143,18 @@ public class Recipe {
 
     public List<Step> getSteps() {
         return steps;
+    }
+
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", steps=" + steps +
+                ", tags=" + tags +
+                ", ingredients=" + ingredients +
+                '}';
     }
 
     public Set<RecipeImage> getImages() {
