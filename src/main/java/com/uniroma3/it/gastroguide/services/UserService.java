@@ -32,5 +32,7 @@ public interface UserService extends UserDetailsService {
 
     List<User> findByFirstNameContainingIgnoreCaseLastNameContainingIgnoreCase(String term);
 
+    Optional<User> getUserByFullName(String name);
+
 //    void processOAuth2User(OAuth2AuthenticationToken authenticationToken);
 }

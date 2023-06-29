@@ -16,15 +16,18 @@ public class UserProfileDto {
     @NotEmpty
     private String lastName;
 
+    private boolean isVerified;
+
     public UserProfileDto(){
 
     }
 
-    public UserProfileDto(String username, String image, String firstName, String lastName) {
+    public UserProfileDto(String username, String image, String firstName, String lastName,boolean isVerified) {
         this.username = username;
         this.image = image;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.isVerified=isVerified;
     }
 
     public String getUsername() {
@@ -57,5 +60,13 @@ public class UserProfileDto {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getFullName(){
+        return this.firstName+" "+this.lastName;
+    }
+
+    public boolean isVerified() {
+        return isVerified;
     }
 }

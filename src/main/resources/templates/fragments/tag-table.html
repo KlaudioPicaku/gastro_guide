@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="contentTemplate='tag-table'">
+
+<body>
+<div th:fragment="tag-table(tags,maxNumberOfPages)">
+  <table class="table slideDown" style="color:#ffffff">
+    <thead>
+    <tr>
+      <th scope="col">Nome</th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${#lists.isEmpty(tags)}">
+      <td colspan="6" class="text-center">
+        <div class="alert alert-info" role="alert">
+          <i class="bi bi-info-circle"></i> No Tags to Display
+        </div>
+      </td>
+    </tr>
+    <tr class="slideDown" th:each="tag: ${tags}">
+      <td th:text="${tag.getName()}"></td>
+      <td><a th:href="'/admin/tag/delete_confirm?tag='+${tag.getName()}" class="btn btn-danger">
+        <i class="bi bi-trash"></i></a></td>
+    </tr>
+    </tbody>
+
+  </table>
+  <form th:action="'/ingredients/recipe?page='" method="GET">
+    <div th:replace="fragments/pagination :: pagination(${maxNumberOfPages})"></div>
+  </form>
+</div>
+</body>
+</html>

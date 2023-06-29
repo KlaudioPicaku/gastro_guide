@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="/fragments/base :: html" th:with="contentTemplate='user_public_profile'" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<body>
+<div class="container mt-3" th:fragment="content">
+    <div class="profile">
+        <div class="card bg-white rounded">
+            <div class="ml-2 mt-2">
+                <div class="profile-picture">
+                    <img th:if="${user.image}" th:src="${user.getImage()}" width="75" height="75" alt="Profile Picture" />
+                </div>
+                <div class="profile-details">
+        <span style="display: inline-block;">
+          <h2 style="color:lightpink; display: inline;" th:text="${user.getFullName()}"></h2>
+        </span>
+                    <span style="display: inline-block;">
+          <i class="bi bi-patch-check-fill checkmark-dark" data-toggle="tooltip" data-placement="top" title="Verified Chef"></i>
+        </span>
+
+                    <p>
+                        <span style="color:lightpink">@</span>
+                        <span style="color:lightpink" th:text="${user.getUsername()}"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white rounded p-3 mt-4" th:if="${ownRecipes}">
+            <h2 style="color:lightpink" th:text="${user.getFullName()+' recipes'}"></h2>
+            <div th:replace="fragments/recipe-table :: recipe-table(recipes=${ownRecipes})"></div>
+        </div>
+        <div class="bg-white rounded p-3 mt-4" th:unless="${ownRecipes}">
+            <td colspan="5" class="text-center">
+                <div class="alert alert-info" role="alert">
+                    <i class="bi bi-info-circle"></i> This chef isn't cooking!
+                </div>
+            </td>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

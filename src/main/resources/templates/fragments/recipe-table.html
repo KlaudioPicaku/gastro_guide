@@ -31,7 +31,7 @@
       <td><img th:src="@{${recipe.getCoverPath()}}" class="rounded-left mr-2" width="50" height="40" alt="Recipe Cover" /></td>
       <td><a class="modern-link" style="color:lightpink" th:href="@{${recipe.getAbsoluteUrl()}}" th:text="${recipe.getName()}"></a></td>
       <td><a class="modern-link" style="color:lightpink" th:href="'/ingredients/recipe?page=1&id='+ ${recipe.getId()}">View Ingredients...</a></td>
-      <td>
+      <td th:if="${isOwnerOrAdmin}">
         <a id="edit_recipe" class="btn btn-warning" th:href="@{'/chef/recipe/edit?id=' + ${recipe.getId()}}">Edit</a>
         <a id="delete_recipe" class="btn btn-danger" th:href="@{'/chef/recipe/delete_confirm?id=' + ${recipe.getId()}}">Delete</a>
       </td>

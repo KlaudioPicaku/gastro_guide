@@ -22,7 +22,7 @@ public class Tag {
     @ManyToOne(cascade = CascadeType.PERSIST)
     private User user;
     @ManyToMany(mappedBy = "tags")
-    private Set<Recipe> recipes = new HashSet<>();;
+    private Set<Recipe> recipes = new HashSet<>();
 
     public Tag(){}
 
@@ -71,5 +71,12 @@ public class Tag {
     public void removeRecipe(Recipe recipe) {
         recipes.remove(recipe);
         recipe.getTags().remove(this);
+    }
+
+    public void removeTagFromRecipes() {
+        for (Recipe recipe : recipes) {
+            recipe.getTags().remove(this);
+        }
+        recipes.clear();
     }
 }

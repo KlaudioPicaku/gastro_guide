@@ -54,5 +54,31 @@ public class IngredientController {
         model.addAttribute("ingredients",ingredientSublist);
         return "recipe_ingredients";
     }
+    @GetMapping("/ingredients/list_view")
+    public String getFilmCast(@RequestParam("page") Integer page,
+                              HttpServletRequest request,
+                              Model model){
+
+
+        List<Ingredient> ingredients= ingredientService.findAll();
+        int pageSize = 10;
+        int startIndex = (page - 1) * pageSize;
+        int endIndex = Math.min(startIndex + pageSize, ingredients.size());
+        List<Ingredient> ingredientSublist;
+        if (startIndex <= endIndex) {
+            ingredientSublist=ingredients.subList(startIndex, endIndex);
+        } else {
+            ingredientSublist= Collections.emptyList();
+        }
+        int maxNumberOfPages=0;
+        if(ingredientSublist.size()>0){
+            maxNumberOfPages=(int) Math.ceil((double) ingredients.size() / pageSize);;
+        }
+        model.addAttribute("request",request);
+        model.addAttribute("page",page);
+        model.addAttribute("maxNumberOfPages",maxNumberOfPages);
+        model.addAttribute("ingredients",ingredientSublist);
+        return "recipe_ingredients";
+    }
 
 }

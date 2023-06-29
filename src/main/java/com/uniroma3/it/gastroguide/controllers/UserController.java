@@ -16,7 +16,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.*;
@@ -59,7 +62,8 @@ public class UserController {
     public String getProfile(@RequestParam(name = "page") int page,
                              @RequestParam(name = "recipe", required = false) Long recipeId,
                              @RequestParam(name = "rating", required = false) Integer rating,
-                             @RequestParam(name = "order", defaultValue = "asc") String order, HttpServletRequest request,
+                             @RequestParam(name = "order", defaultValue = "asc") String order,
+                             HttpServletRequest request,
                              Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
@@ -70,7 +74,7 @@ public class UserController {
             return "error/404";
         }
         User userLocal=user.get();
-        UserProfileDto userPublic = new UserProfileDto(userLocal.getUsername(),userLocal.getImage(),userLocal.getFirstName(), userLocal.getLastName());
+        UserProfileDto userPublic = new UserProfileDto(userLocal.getUsername(),userLocal.getImage(),userLocal.getFirstName(), userLocal.getLastName(),userLocal.isVerified());
         Recipe recipe=null;
         if(recipeId!=null) {
             recipe = recipeService.findById(recipeId).orElse(null);
@@ -133,6 +137,75 @@ public class UserController {
         model.addAttribute("recipes",recipes);
         model.addAttribute("user",userPublic);
         return "user_profile";
+    }
+    @GetMapping("/chef/detail")
+    public String getProfile(@RequestParam(name = "name") String name,
+                             HttpServletRequest request,
+                             Model model) {
+
+        Optional<User> user=userService.getUserByFullName(name);
+
+        model.addAttribute("request",request);
+        if(!user.isPresent()){
+            return "error/404";
+        }
+        User userLocal=user.get();
+        UserProfileDto userPublic = new UserProfileDto(userLocal.getUsername(),userLocal.getImage(),userLocal.getFirstName(), userLocal.getLastName(),userLocal.isVerified());
+
+        List<Review> reviews= new ArrayList<>();
+
+        model.addAttribute("ownRecipes",recipeService.findByUser(user.get()));
+        model.addAttribute("user",userPublic);
+        return "user_public_profile";
+    }
+    @GetMapping("/reviews/edit")
+    public String editReview(@RequestParam("id") Long id,Model model, HttpServletRequest request){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Optional<Review> review = reviewService.findById(id);
+        Optional<User> user=userService.getUserByUsername(auth.getName());
+        if(user.isPresent() && review.isPresent() && !(user.get().getUsername().equals(review.get().getuser().getUsername()))){
+            return "error/403";
+        }
+        Review reviewLocal=review.get();
+        ReviewPublic reviewPublic=new ReviewPublic(reviewLocal.getTitle(),reviewLocal.getBody(),
+                reviewLocal.getuser().getUsername(),reviewLocal.getRating(),reviewLocal.getuser().getImage()
+                ,reviewLocal.getId(),reviewLocal.getRecipe());
+        if(user.isPresent()) {
+            User userLocal = user.get();
+            UserProfileDto userPublic = new UserProfileDto(userLocal.getUsername(),userLocal.getImage(),userLocal.getFirstName(), userLocal.getLastName(),userLocal.isVerified());
+            model.addAttribute("user", userPublic);
+            model.addAttribute("review", reviewPublic);
+            model.addAttribute("request",request);
+            return "edit_review";
+        }
+        else{
+            return "error/404";
+        }
+    }
+    @PostMapping("/edit/review")
+    public String editReview(@ModelAttribute("review") ReviewPublic review, BindingResult results){
+        System.out.println(review.toString());
+        if(results.hasErrors()){
+            System.out.println(results.getAllErrors());
+            return "redirect:/reviews/edit?id="+review.getReviewId();
+        }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Long reviewID=review.getReviewId();
+        Optional<Review> reviewLocal = reviewService.findById(reviewID);
+        Optional<User> user=userService.getUserByUsername(auth.getName());
+        System.out.println("-------------------");
+        System.out.println(reviewLocal.isPresent());
+        System.out.println(reviewLocal.get().getuser().getUsername());
+        System.out.println(user.get().getUsername());
+        System.out.println("------------------");
+        if(reviewLocal.isPresent() && !reviewLocal.get().getuser().getUsername().equals(user.get().getUsername())){
+            return "error/403";
+        }
+        reviewLocal.get().setRating(review.getReviewRating());
+        reviewLocal.get().setBody(review.getReviewBody());
+        reviewLocal.get().setTitle(review.getReviewTitle());
+        reviewService.save(reviewLocal.get());
+        return "redirect:/profile?page=1&recipe=&rating=&order=";
     }
 
 }

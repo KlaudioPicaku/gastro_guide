@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:include="/fragments/base :: html" th:with="contentTemplate='edit_review'" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<body>
+<div class="container mt-3" th:fragment="content">
+<div class="profile">
+  <div class="profile-picture">
+    <img th:if="${user.image}" th:src="${user.getImage()}" width="75" height="75" alt="Profile Picture" />
+    <a href="/edit-profile-picture">Edit</a>
+  </div>
+  <div class="profile-details">
+    <h2 style="color:white" th:text="${user.getUsername()}"></h2>
+    <p>
+      <span style="color:white" th:text="${user.getFirstName()}"></span>
+      <span style="color:white" th:text="${user.getLastName()}"></span>
+    </p>
+  </div>
+  <div class="bg-dark rounded p-3">
+    <h2 style="color:white">Edit Review:</h2>
+    <div th:replace="fragments/non_rest_review_form_fragment :: non_rest_review_form_fragment(${review})"></div>
+  </div>
+</div>
+</div>
+</body>
+</html>

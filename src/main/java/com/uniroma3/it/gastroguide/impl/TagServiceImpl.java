@@ -58,4 +58,11 @@ public class TagServiceImpl implements TagService {
             tagRepository.save(t);
         }
     }
+
+    @Override
+    public void deleteByName(String name) {
+        Tag tag=tagRepository.findByTitle(name).get();
+        tag.removeTagFromRecipes();
+        tagRepository.delete(tag);
+    }
 }

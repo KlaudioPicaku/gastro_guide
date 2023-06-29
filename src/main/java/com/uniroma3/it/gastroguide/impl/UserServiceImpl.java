@@ -158,6 +158,17 @@ public class UserServiceImpl implements UserService,UserDetailsService {
     }
 
     @Override
+    public Optional<User> getUserByFullName(String fullName) {
+        String[] nameParts = fullName.split(" ");
+        if (nameParts.length >= 2) {
+            String firstName = nameParts[0];
+            String lastName = nameParts[nameParts.length - 1];
+            return userRepository.findByFirstNameContainingAndLastNameContaining(firstName,lastName);
+        }
+        return null;
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DisabledException {
         Optional<User> user= userRepository.findByUsername(username);
         if (!user.isPresent()){

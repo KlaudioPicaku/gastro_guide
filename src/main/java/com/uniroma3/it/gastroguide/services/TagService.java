@@ -22,4 +22,5 @@ public interface TagService {
 
     void bulkCreate(List<TagDto> tagDtos);
 
+    void deleteByName(String name);
 }

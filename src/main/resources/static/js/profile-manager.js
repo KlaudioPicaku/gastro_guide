@@ -30,6 +30,7 @@ $(document).ready(function() {
       contentType: false,
       success: function(response) {
         console.log('Picture uploaded successfully');
+        location.reload();
       },
       error: function(xhr, status, error) {
         console.error('Failed to upload picture', error);

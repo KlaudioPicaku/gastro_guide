@@ -34,10 +34,11 @@ $(document).ready(function() {
   }
 
   $(document).ready(function() {
-    $('.checkmark').tooltip({
+    $('.checkmark, .checkmark-dark').tooltip({
       title: 'Verified Chef',
       placement: 'top'
     });
+
   });
 
   // $('#profile_dropdownMenuButton').click(function(event) {

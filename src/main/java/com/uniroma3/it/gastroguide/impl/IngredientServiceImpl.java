@@ -53,4 +53,9 @@ public class IngredientServiceImpl implements IngredientService {
     public List<Ingredient> findByRecipe(Recipe recipe) {
         return ingredientRepository.findAllByRecipesContaining(recipe);
     }
+
+    @Override
+    public List<Ingredient> findAll() {
+        return this.ingredientRepository.findAll();
+    }
 }

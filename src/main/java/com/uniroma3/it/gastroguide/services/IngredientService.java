@@ -20,4 +20,6 @@ public interface IngredientService {
     void saveOrUpdate(Ingredient ingredient);
 
     List<Ingredient> findByRecipe(Recipe recipe);
+
+    List<Ingredient> findAll();
 }

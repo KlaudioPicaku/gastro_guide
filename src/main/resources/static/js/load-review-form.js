@@ -175,4 +175,7 @@ $(document).ready(function() {
       loadForm();
     });
   }
+  if($("#non_rest_review").length>0){
+       starryNight();
+  }
 });
