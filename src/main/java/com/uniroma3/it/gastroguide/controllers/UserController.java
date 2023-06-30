@@ -136,6 +136,7 @@ public class UserController {
         List<Recipe> recipes=recipeService.findAll();
         model.addAttribute("recipes",recipes);
         model.addAttribute("user",userPublic);
+        model.addAttribute("isOwnerOrAdmin",true);
         return "user_profile";
     }
     @GetMapping("/chef/detail")
@@ -144,6 +145,12 @@ public class UserController {
                              Model model) {
 
         Optional<User> user=userService.getUserByFullName(name);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        Optional<User> userLogged=userService.getUserByUsername(auth.getName());
+        boolean isOwnerOrAdmin=userLogged.isPresent() && userLogged.get().getUsername().equals(user.get().getUsername()) ||
+                auth.getAuthorities().stream().anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN"));
 
         model.addAttribute("request",request);
         if(!user.isPresent()){
@@ -156,6 +163,7 @@ public class UserController {
 
         model.addAttribute("ownRecipes",recipeService.findByUser(user.get()));
         model.addAttribute("user",userPublic);
+        model.addAttribute("isOwnerOrAdmin",isOwnerOrAdmin);
         return "user_public_profile";
     }
     @GetMapping("/reviews/edit")

@@ -104,7 +104,7 @@ public class ResetPasswordController {
             return "insert-new-password-form";
         }
         userService.updateUser(user.get(),passwordResetConfirm.getPassword());
-        return "redirect:/login/";
+        return "redirect:/login";
     }
 
 }

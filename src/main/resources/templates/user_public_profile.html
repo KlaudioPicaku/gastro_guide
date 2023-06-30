@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="bg-white rounded p-3 mt-4" th:if="${ownRecipes}">
-            <h2 style="color:lightpink" th:text="${user.getFullName()+' recipes'}"></h2>
+            <h2 style="color:lightpink" th:text="${user.getFullName() + &quot;'s recipes&quot;}"></h2>
             <div th:replace="fragments/recipe-table :: recipe-table(recipes=${ownRecipes})"></div>
         </div>
         <div class="bg-white rounded p-3 mt-4" th:unless="${ownRecipes}">
