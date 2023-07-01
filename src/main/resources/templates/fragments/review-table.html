@@ -77,12 +77,8 @@
             </td>
             <td>
                 <div class="d-flex">
-                    <div th:if="${request != null and request.isUserInRole('ROLE_ADMIN') or  request.getUserPrincipal() == review.getReviewAuthor()}">
                         <a id="delete_review" class="btn btn-danger" th:href="@{'/reviews/delete_confirm?id=' + ${review.getReviewId()}}"><i class="bi bi-trash"></i></a>
-                    </div>
-                    <div th:if="${request != null and request.isUserInRole('ROLE_ADMIN') or request.isUserInRole('ROLE_USER')}">
                         <a id="edit_review" class="btn btn-warning" th:href="@{'/reviews/edit?id=' + ${review.getReviewId()}}"><i class="bi bi-pencil-square"></i></a>
-                    </div>
                 </div>
             </td>
         </tr>

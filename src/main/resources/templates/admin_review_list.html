@@ -5,19 +5,19 @@
     <div class="row">
         <div class="col-md-4">
             <div class="profile-detail">
-                <div th:if="${currentFilm != null}">
-                    <img class="slideRight" th:src="${currentFilm.getCoverPath()}" alt="Cover Picture">
+                <div th:if="${currentRecipe != null}">
+                    <img class="slideRight" th:src="${currentRecipe.getCoverPath()}" alt="Cover Picture">
                 </div>
             </div>
         </div>
         <div class="col-md-8">
-            <div th:if="${currentFilm != null}">
-                <h2 style="color:white" th:text="${currentFilm.getTitle()}" class="font-weight-bold"></h2>
+            <div th:if="${currentRecipe != null}">
+                <h2 style="color:white" th:text="${currentRecipe.getName()}" class="font-weight-bold"></h2>
             </div>
             <h3 class="mt-2">Reviews</h3>
             <!-- <p th:text="${currentRating}"></p> -->
-            <div class="bg-dark rounded p-3">
-                <div th:replace="fragments/review-table :: review-table(reviews=${reviews}, films=${films}, currentFilm=${currentFilm}, maxNumberOfPages=${maxNumberOfPages}, page=${page}, currentRating=${currentRating}, currentOrdering=${currentOrdering})"></div>
+            <div class="bg-light rounded p-3">
+                <div th:replace="fragments/review-table :: review-table(reviews=${reviews}, recipes=${recipes}, currentRecipe=${currentRecipe}, maxNumberOfPages=${maxNumberOfPages}, page=${page}, currentRating=${currentRating}, currentOrdering=${currentOrdering})"></div>
             </div>
         </div>
     </div>

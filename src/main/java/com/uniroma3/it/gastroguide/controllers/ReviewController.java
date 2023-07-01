@@ -49,8 +49,8 @@ public class ReviewController {
         if(bindingResult.hasErrors()){
             return ResponseEntity.badRequest().body("Validation errors occurred");
         }
-        System.out.println(reviewDto.toString());
-        System.out.println(bindingResult.hasErrors());
+//        System.out.println(reviewDto.toString());
+//        System.out.println(bindingResult.hasErrors());
 
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -70,9 +70,9 @@ public class ReviewController {
         if (recipe != null && user.isPresent()) {
 
             Review review = new Review(reviewDto.getTitle(), reviewDto.getRating(), reviewDto.getBody(), user.get(), recipe.get());
-            System.out.println(review.toString());
+//            System.out.println(review.toString());
             reviewService.save(review);
-            System.out.println(review.toString());
+//            System.out.println(review.toString());
 
         }else{
             return ResponseEntity.badRequest().body("There was a problem fetching the author or film entity ");

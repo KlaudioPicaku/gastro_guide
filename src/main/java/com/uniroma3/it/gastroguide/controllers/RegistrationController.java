@@ -5,6 +5,7 @@ import com.uniroma3.it.gastroguide.models.User;
 import com.uniroma3.it.gastroguide.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -36,41 +37,44 @@ public class RegistrationController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute("user") UserDto user, BindingResult result) {
-        System.out.println(user.toString());
+    public String registerUser(@Valid @ModelAttribute("user") UserDto user, @NotNull BindingResult result,HttpServletRequest request, Model model) {
         if (result.hasErrors()) {
-            System.out.println("has errors ");
-            System.out.println(result.getAllErrors());
+            model.addAttribute("request",request);
             return "register";
         }
+
         if (!user.getPassword().equals(user.getConfirmPassword())) {
             result.rejectValue("confirmPassword", "error.confirmPassword", "Password and confirmation password do not match");
+            model.addAttribute("request",request);
+            return "register";
         }
-        Optional<User> userDetails=null;
-        if (userService!=null){
-            System.out.println("is not null");
+
+        Optional<User> userDetails = userService.getUserByUsername(user.getUsername());
+        if (userDetails.isPresent()) {
+            result.rejectValue("username", "error.user", "Username is already in use");
+            model.addAttribute("request",request);
+
+            return "register";
         }
-        try {
-            userDetails = userService.getUserByUsername(user.getUsername());
-            if(userDetails.isPresent()) {
-                result.rejectValue("username", "error.user", "Username is already in use");
-                return "register";
-            }
-        } catch (UsernameNotFoundException ex) {}
-        userDetails=userService.loadByEmail(user.getEmail());
-        if( userDetails.isPresent() ){
+
+        userDetails = userService.loadByEmail(user.getEmail());
+        if (userDetails.isPresent()) {
             result.rejectValue("email", "error.user", "Email is already in use");
+            model.addAttribute("request",request);
+
             return "register";
         }
-        Optional<User> userPresent=userService.getUserByUsername(user.getUsername());
 
-        if (userPresent.isPresent()){
+        Optional<User> userPresent = userService.getUserByUsername(user.getUsername());
+        if (userPresent.isPresent()) {
             result.rejectValue("username", "error.user", "This username is taken");
+            model.addAttribute("request",request);
+
             return "register";
         }
-
 
         userService.saveUser(user);
         return "redirect:/login";
     }
+
 }

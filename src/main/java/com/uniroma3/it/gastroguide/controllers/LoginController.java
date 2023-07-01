@@ -39,7 +39,7 @@ public class LoginController {
     public String loginMethod(@Valid @ModelAttribute("user") UserDto userDto, BindingResult bindingResult, HttpSession session, Model model, HttpServletRequest request) {
         System.out.println("post eseguita");
         if (bindingResult.hasErrors()) {
-            System.out.println(bindingResult.getAllErrors());
+            model.addAttribute("request",request);
             return "login";
         }
 
@@ -49,12 +49,16 @@ public class LoginController {
 
         if (!user.isPresent() || !userService.passwordMatch(user.get(), userDto.getPassword())) {
             model.addAttribute("loginError", true);
+            model.addAttribute("request",request);
             return "login";
         }
 
         if (!user.get().isEnabled()) {
             model.addAttribute("emailNotVerified", true);
-
+            System.out.println("--------------");
+            System.out.println("not verified");
+            System.out.println("--------------");
+            model.addAttribute("request",request);
             return "login";
         }
 

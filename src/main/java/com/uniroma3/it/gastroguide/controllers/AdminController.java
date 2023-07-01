@@ -3,6 +3,7 @@ package com.uniroma3.it.gastroguide.controllers;
 import com.uniroma3.it.gastroguide.dtos.TagDto;
 import com.uniroma3.it.gastroguide.exposed.ReviewPublic;
 import com.uniroma3.it.gastroguide.models.Ingredient;
+import com.uniroma3.it.gastroguide.models.Recipe;
 import com.uniroma3.it.gastroguide.models.Review;
 import com.uniroma3.it.gastroguide.models.User;
 import com.uniroma3.it.gastroguide.repositories.*;
@@ -22,9 +23,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class AdminController {
@@ -68,6 +68,78 @@ public class AdminController {
         this.tagService=tagService;
         this.userRepository=userRepository;
         this.userService=userService;
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/review/list_view")
+    public String getReviewsList(@RequestParam(name = "page") int page,
+                                 @RequestParam(name = "recipe", required = false) Long recipeId,
+                                 @RequestParam(name = "rating", required = false) Integer rating,
+                                 @RequestParam(name = "order", defaultValue = "asc") String order,
+                                 HttpServletRequest request,
+                                 Model model) {
+
+        Recipe recipe=null;
+        if(recipeId!=null) {
+            recipe = recipeService.findById(recipeId).orElse(null);
+        }
+
+        List<Review> reviews= new ArrayList<>();
+        if (page<1){
+            return  "error/422";
+        }
+        if (rating == null && recipe != null) {
+            reviews = reviewService.findAllByRecipe(recipe);
+            model.addAttribute("currentRecipe", recipe);
+            model.addAttribute("currentRating", null);
+        } else if (rating != null && recipe == null){
+            reviews = reviewService.findAllByRating(rating);
+            model.addAttribute("currentRecipe", null);
+        }else if(rating !=null && recipe !=null) {
+            reviews=reviewService.findAllByRatingForRecipe(recipe,rating);
+            model.addAttribute("currentRecipe", recipe);
+
+        }else{
+            reviews=reviewService.findAll();
+            model.addAttribute("currentRecipe", null);
+        }
+
+        // ordinamento per data di creazione
+        if (order.equals("asc") && !reviews.isEmpty()) {
+            reviews.sort(Comparator.comparing(Review::getCreatedOn));
+        } else if (order.equals("desc") && !reviews.isEmpty()) {
+            reviews.sort(Comparator.comparing(Review::getCreatedOn).reversed());
+
+        }
+
+        int pageSize = 10;
+        int startIndex = (page - 1) * pageSize;
+        int endIndex = Math.min(startIndex + pageSize, reviews.size());
+
+        List<Review> reviewSublist;
+        if (startIndex <= endIndex) {
+            reviewSublist=reviews.subList(startIndex, endIndex);
+        } else {
+            reviewSublist= Collections.emptyList();
+        }
+        int maxNumberOfPages=0;
+        if(reviewSublist.size()>0){
+            maxNumberOfPages=(int) Math.ceil((double) reviews.size() / pageSize);;
+        }
+
+        List<ReviewPublic> reviewsPublic = reviewSublist.stream()
+                .map(r -> new ReviewPublic(r.getTitle(), r.getBody(), r.getuser().getUsername(), r.getRating(), r.getuser().getImage(),r.getId(),r.getRecipe()))
+                .collect(Collectors.toList());
+
+        model.addAttribute("reviews",reviewsPublic);
+        model.addAttribute("page",page);
+        model.addAttribute("maxNumberOfPages",maxNumberOfPages);
+        model.addAttribute("currentOrdering",order);
+        model.addAttribute("currentRating", rating);
+        List<Recipe> recipes=recipeService.findAll();
+        model.addAttribute("recipes",recipes);
+        model.addAttribute("request",request);
+        return "admin_review_list";
     }
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin/panel")
