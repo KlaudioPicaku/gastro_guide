@@ -80,6 +80,7 @@ public class AdminController {
                                  Model model) {
 
         Recipe recipe=null;
+        System.out.println(request.getUserPrincipal().getName());
         if(recipeId!=null) {
             recipe = recipeService.findById(recipeId).orElse(null);
         }

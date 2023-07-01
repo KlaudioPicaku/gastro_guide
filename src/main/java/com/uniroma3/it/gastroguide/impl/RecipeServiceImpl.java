@@ -92,13 +92,11 @@ public class RecipeServiceImpl implements RecipeService {
 
 
     @Override
-    public void delete(Long id) {
-
-//        List<Review> reviews= reviewRepository.findAllByFilm(filmRepository.findById(id).get());
-//        for(Review r : reviews){
-//            reviewRepository.delete(r);
-//        }
-        Recipe recipe = recipeRepository.findById(id).get();
+    public void delete(Recipe recipe) {
+        for(RecipeImage i: recipe.getImages()){
+            recipeImageService.delete(i);
+        }
+        recipe.clearImages();
         recipeRepository.delete(recipe);
     }
 

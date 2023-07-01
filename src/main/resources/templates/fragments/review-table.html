@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" th:with="contentTemplate='review-table'">
 
 <body>
-<div th:fragment="review-table(reviews,recipes,currentRecipe,maxNumberOfPages,page,currentRating,currentOrdering)">
+<div th:fragment="review-table(reviews,recipes,currentRecipe,maxNumberOfPages,page,currentRating,currentOrdering,)">
 <!--    <p th:text="${currentRating}"></p>-->
     <form id="reviewTableFilters" method="get" action="">
         <div class="row">
@@ -78,7 +78,7 @@
             <td>
                 <div class="d-flex">
                         <a id="delete_review" class="btn btn-danger" th:href="@{'/reviews/delete_confirm?id=' + ${review.getReviewId()}}"><i class="bi bi-trash"></i></a>
-                        <a id="edit_review" class="btn btn-warning" th:href="@{'/reviews/edit?id=' + ${review.getReviewId()}}"><i class="bi bi-pencil-square"></i></a>
+                        <a th:if="${request.getUserPrincipal().getName().equals(review.getReviewAuthor())}" id="edit_review" class="btn btn-warning" th:href="@{'/reviews/edit?id=' + ${review.getReviewId()}}"><i class="bi bi-pencil-square"></i></a>
                 </div>
             </td>
         </tr>

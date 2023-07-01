@@ -43,7 +43,7 @@ public class Recipe {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "recipe",cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "recipe")
     private Set<RecipeImage> images = new HashSet<>();
 
 
@@ -162,5 +162,9 @@ public class Recipe {
         sortedImages.addAll(this.images);
 
         return sortedImages;
+    }
+
+    public void clearImages() {
+        this.images.clear();
     }
 }
