@@ -163,4 +163,8 @@ public class Recipe {
 
         return sortedImages;
     }
+
+    public void clearImages() {
+        this.images.clear();
+    }
 }

@@ -28,7 +28,7 @@
           <a class="modern-link" href="/register">Login or Sign Up to leave your thoughts!</a>
         </div>
         <div th:if="${request != null and request.isUserInRole('ROLE_ADMIN')}">
-          <a id="edit_recipe" class="btn btn-warning" th:href="@{'/chef/recipe/edit?id=' + ${recipe.getId()}}">Edit</a>
+          <a th:if="${isOwner}" id="edit_recipe" class="btn btn-warning" th:href="@{'/chef/recipe/edit?id=' + ${recipe.getId()}}">Edit</a>
           <a id="delete_recipe" class="btn btn-danger" th:href="@{'/chef/recipe/delete_confirm?id=' + ${recipe.getId()}}">Delete</a>
         </div>
         <!-- If logged in, show review form -->

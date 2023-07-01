@@ -5,18 +5,24 @@ import com.uniroma3.it.gastroguide.constants.DefaultSaveLocations;
 import com.uniroma3.it.gastroguide.dtos.IngredientDto;
 import com.uniroma3.it.gastroguide.dtos.RecipeDto;
 import com.uniroma3.it.gastroguide.dtos.StepDto;
+import com.uniroma3.it.gastroguide.exposed.RecipePublic;
+import com.uniroma3.it.gastroguide.exposed.ReviewPublic;
 import com.uniroma3.it.gastroguide.models.Recipe;
 import com.uniroma3.it.gastroguide.models.RecipeImage;
+import com.uniroma3.it.gastroguide.models.Review;
 import com.uniroma3.it.gastroguide.models.User;
 import com.uniroma3.it.gastroguide.services.*;
 import com.uniroma3.it.gastroguide.utils.FileNameGenerator;
 import com.uniroma3.it.gastroguide.utils.FileUploader;
 import com.uniroma3.it.gastroguide.utils.JSONIntArrayStringtoArrayListConverter;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.h2.engine.Mode;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +32,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.extras.springsecurity6.auth.Authorization;
 
 import java.io.IOException;
@@ -69,7 +76,7 @@ public class RecipeController {
 
     @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
     @PostMapping("/recipe/create")
-    public String createRecipe(@ModelAttribute("recipe") RecipeDto recipe, HttpServletRequest request, BindingResult result,Model model){
+    public String createRecipe(@ModelAttribute("recipe") RecipeDto recipe, HttpServletRequest request, @NotNull BindingResult result, Model model){
         if (result.hasErrors()){
             model.addAttribute("request",request);
             return "recipe_create_form";
@@ -93,8 +100,11 @@ public class RecipeController {
 
         Optional<User> user= userService.findByUsername(authentication.getName());
 
+        User recipeOwner=recipe.get().getUser();
 
+        boolean isOwner = user.isPresent() && user.get().getUsername().equals(recipeOwner.getUsername());
         model.addAttribute("request",request);
+        model.addAttribute("isOwner",isOwner);
         boolean reviewLeft= false;
 
         if(user.isPresent()){
@@ -193,6 +203,67 @@ public class RecipeController {
 
         recipeService.saveOrUpdate(recipe);
         return "redirect:/recipe/detail?id="+recipe.getId();
+    }
+
+    @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
+    @GetMapping("/chef/recipe/delete_confirm")
+    public String confirmDeleteRecipe(@RequestParam("id")Long recipeId, Model model, HttpSession session, HttpServletRequest request){
+        Optional<Recipe> recipe= recipeService.findById(recipeId);
+
+        if(!recipe.isPresent()){
+            return "error/404";
+        }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        Optional<User> user=userService.getUserByUsername(auth.getName());
+
+        if(!user.isPresent()){
+            return "error/404";
+        }
+
+        boolean isAdmin=auth.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .anyMatch(role -> role.equals("ROLE_ADMIN"));
+
+        if(!(user.get().getUsername().equals(recipe.get().getUser().getUsername())) && !isAdmin){
+            return "error/403";
+        }
+        RecipePublic recipePublic=new RecipePublic(recipe.get().getId(),recipe.get().getName(),recipe.get().getCoverPath(),recipe.get().getDescription());
+        model.addAttribute("object", recipePublic);
+
+        String referer = request.getHeader("Referer");
+        if (referer != null) {
+            session.setAttribute("previousUrl", referer);
+        }
+        model.addAttribute("request",request);
+        return "recipe_delete_confirm";
+
+    }
+    @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
+    @PostMapping("/chef/recipe/delete")
+    public String recipeDelete(@RequestParam("id") Long recipeId, HttpSession session,HttpServletRequest request, Model model){
+        Optional<Recipe> recipe= recipeService.findById(recipeId);
+
+        if(!recipe.isPresent()){
+            return "error/404";
+        }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        Optional<User> user=userService.getUserByUsername(auth.getName());
+
+        if(!user.isPresent()){
+            return "error/404";
+        }
+
+        boolean isAdmin=auth.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .anyMatch(role -> role.equals("ROLE_ADMIN"));
+
+        if(!(user.get().getUsername().equals(recipe.get().getUser().getUsername())) && !isAdmin){
+            return "error/403";
+        }
+        recipeService.delete(recipe.get());
+        return "redirect:"+session.getAttribute("previousUrl");
     }
 
 }

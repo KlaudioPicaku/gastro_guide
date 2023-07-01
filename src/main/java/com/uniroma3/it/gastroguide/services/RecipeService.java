@@ -22,7 +22,7 @@ public interface RecipeService {
 
     void saveOrUpdate(Recipe recipe);
 
-    void delete(Long Id);
+    void delete(Recipe recipe);
 
     List<Recipe> searchByTerm(String term);
 

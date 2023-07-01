@@ -152,6 +152,8 @@ public class UserController {
         boolean isOwnerOrAdmin=userLogged.isPresent() && userLogged.get().getUsername().equals(user.get().getUsername()) ||
                 auth.getAuthorities().stream().anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN"));
 
+        boolean isOwner = userLogged.isPresent() && userLogged.get().getUsername().equals(user.get().getUsername());
+
         model.addAttribute("request",request);
         if(!user.isPresent()){
             return "error/404";
@@ -162,6 +164,7 @@ public class UserController {
         List<Review> reviews= new ArrayList<>();
 
         model.addAttribute("ownRecipes",recipeService.findByUser(user.get()));
+        model.addAttribute("isOwner",isOwner);
         model.addAttribute("user",userPublic);
         model.addAttribute("isOwnerOrAdmin",isOwnerOrAdmin);
         return "user_public_profile";

@@ -25,7 +25,8 @@
         <span style="display: inline-block;">
           <h2 style="color:lightpink; display: inline;" th:text="${user.getFullName()}"></h2>
         </span>
-        <span style="display: inline-block;">
+
+        <span th:if="${user.isVerified()}" style="display: inline-block;">
           <i class="bi bi-patch-check-fill checkmark-dark" data-toggle="tooltip" data-placement="top" title="Verified Chef"></i>
         </span>
 
